@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #000000;
+  --color-foreground: #F2F2F2;
+  --color-primary: #FF8500;
+  --color-primary-dark: #FE7D13;
+  --color-primary-light: #FF9149;
+  
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Base custom utility classes for ethereal glass */
+@layer utilities {
+  .glass-card {
+    @apply bg-white/5 border border-white/10 rounded-[2rem] shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)] backdrop-blur-md;
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60;
+  }
+  
+  .text-gradient-primary {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#FF9149] to-[#FE7D13];
+  }
+}
