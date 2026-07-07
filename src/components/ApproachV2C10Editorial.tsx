@@ -47,9 +47,9 @@ export default function ApproachV2C10Editorial() {
         <div className="hidden lg:block w-[380px] flex-shrink-0 sticky top-32 self-start">
           <div className="overflow-hidden rounded-3xl" style={{ height: "60vh" }}>
             <motion.div
-              style={{ y: imageY }}
               className="w-full flex items-center justify-center relative"
               style={{
+                y: imageY,
                 height: "calc(100% + 120px)",
                 marginTop: "-60px",
                 background: "linear-gradient(135deg, rgba(255,133,0,0.08) 0%, #0f0a00 50%, #050505 100%)",
