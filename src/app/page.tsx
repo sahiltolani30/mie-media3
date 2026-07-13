@@ -70,84 +70,24 @@ export default function Home() {
       <Problem />
 
       {/* 5 NEW PROBLEM CONCEPTS FOR REVIEW */}
-      <ProblemV2LossCounter />
-      <ProblemV2SideBySide />
-      <ProblemV2XRay />
       <ProblemV2BrokenFunnel />
-      <ProblemV2Marquee />
-
-      <Approach />
-
-
       <Services />
 
-      {/* 5 NEW "WHAT WE DO" CONCEPTS FOR REVIEW */}
-      <WhatWeDoConcept1Pipeline />
-      <WhatWeDoConcept2Bento />
-      <WhatWeDoConcept3Accordion />
-      <WhatWeDoConcept4CommandCenter />
-      <WhatWeDoConcept5Spotlight />
-
-      {/* 5 ADVANCED "WHAT WE DO" CONCEPTS (6-10) */}
-      <WhatWeDoConcept6StickyStack />
-      <WhatWeDoConcept7TextMask />
-      <WhatWeDoConcept8Blueprint />
-      <WhatWeDoConcept9Horizontal />
-      <WhatWeDoConcept10DynamicIsland />
-
-
-
-      <Showcase />
-
       {/* 3 NEW CONCEPTS FOR REVIEW */}
-      <Concept4Editorial />
       <Concept5Accordion />
-      <Concept6GlassStage />
 
-      <Concept1DigitalDesk />
 
       <Approach />
       {/* 10 NEW "OUR APPROACH" V2 CONCEPTS FOR REVIEW */}
-      <ApproachV2C1StickySteps />
-      <ApproachV2C2SVGPath />
-      <ApproachV2C3Pipeline />
-      <ApproachV2C4Redline />
-      <ApproachV2C5Contrast />
-      <ApproachV2C6Terminal />
-      <ApproachV2C7BigNumber />
-      <ApproachV2C8SplitDivergence />
-      <ApproachV2C9HorizontalPan />
-      <ApproachV2C10Editorial />
       <HowItWorks />
-      <Success />
 
       {/* 10 NEW "WHAT SUCCESS LOOKS LIKE" CONCEPTS FOR REVIEW */}
-      <SuccessV2C1CountingMetrics />
-      <SuccessV2C2HorizontalScroll />
-      <SuccessV2C3StickyChapters />
-      <SuccessV2C4GrowthCurve />
-      <SuccessV2C5Roadmap />
-      <SuccessV2C6StatementWall />
       <SuccessV2C7BentoKPI />
-      <SuccessV2C8Marquee />
-      <SuccessV2C9DayByDay />
-      <SuccessV2C10PullQuote />
 
-      <ICP />
 
       {/* 10 NEW "WHO WE WORK WITH" CONCEPTS FOR REVIEW */}
       <ICPV2C1CheckboxMirror />
-      <ICPV2C2InternalMonologue />
-      <ICPV2C3TwoColumn />
-      <ICPV2C4AsymmetricGrid />
-      <ICPV2C5PersonaScroll />
-      <ICPV2C6Typewriter />
-      <ICPV2C7Accordion />
-      <ICPV2C8Provocation />
-      <ICPV2C9TypographyStagger />
-      <ICPV2C10HorizontalPan />
 
-      <FounderStory />
       <Footer />
     </main>
   );

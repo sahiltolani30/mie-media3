@@ -13,9 +13,7 @@ const stages = [
 export default function ProblemV2BrokenFunnel() {
   return (
     <section className="relative w-full bg-[#030303] py-32 px-6 overflow-hidden">
-      <div className="w-full py-3 bg-[#FF8500] text-black text-center font-bold text-sm uppercase tracking-widest absolute top-0 left-0 z-50">
-        Problem Concept D: The Broken Funnel
-      </div>
+
 
       {/* Ambient */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-900/5 blur-[150px] rounded-full pointer-events-none" />

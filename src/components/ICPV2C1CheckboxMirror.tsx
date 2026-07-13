@@ -21,15 +21,9 @@ export default function ICPV2C1CheckboxMirror() {
 
   return (
     <section ref={containerRef} className="relative w-full bg-[#050505] border-b border-white/5 py-32 px-6">
-      <div className="absolute top-6 left-0 w-full text-center pointer-events-none z-50">
-        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5">
-          <span className="text-[11px] uppercase tracking-[0.2em] font-medium text-white/40">
-            ICP Concept 1: Checkbox Mirror Test
-          </span>
-        </div>
-      </div>
 
-      <div className="mx-auto max-w-4xl mt-12">
+
+      <div className="mx-auto max-w-7xl mt-12">
         <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 mb-8">
           <span className="text-[11px] uppercase tracking-[0.2em] font-medium text-white/50">Who We Work With</span>
         </div>

@@ -48,9 +48,7 @@ export default function Concept5Accordion() {
 
   return (
     <section className="w-full bg-[#0a0a0a] text-white overflow-hidden py-24 relative">
-      <div className="w-full py-10 bg-[#FF8500] text-black text-center font-bold text-2xl uppercase tracking-widest absolute top-0 left-0 z-50">
-        Concept 5: Awwwards Accordion
-      </div>
+
 
       {/* Cinematic Dynamic Background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center z-0 select-none">
@@ -73,7 +71,16 @@ export default function Concept5Accordion() {
         </AnimatePresence>
       </div>
 
-      <div className="container mx-auto px-4 lg:px-8 max-w-7xl pt-16 flex flex-col lg:flex-row gap-12 lg:gap-24 min-h-[800px] relative z-10">
+      <div className="relative z-20 text-center mb-16 pt-8 container mx-auto px-4 lg:px-8">
+        <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-white mb-4">
+          Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF8500] to-[#FE7D13]">Featured Work</span>
+        </h2>
+        <p className="text-lg text-[#DEDEDE] max-w-2xl mx-auto">
+          Explore the premium content, brand identities, and campaigns we've built for top architecture and interior design studios.
+        </p>
+      </div>
+
+      <div className="container mx-auto px-4 lg:px-8 max-w-7xl flex flex-col lg:flex-row gap-12 lg:gap-24 min-h-[800px] relative z-10">
         
         {/* Left: Accordion Titles */}
         <div className="w-full lg:w-1/2 flex flex-col justify-center">
