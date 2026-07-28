@@ -16,7 +16,7 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: "Services", href: "#services" },
+    { name: "Content Solutions", href: "#services" },
     { name: "How it works", href: "#how-it-works" },
     { name: "Results", href: "#results" },
     { name: "Who we serve", href: "#icp" },
@@ -58,7 +58,7 @@ export default function Navbar() {
               href="#book"
               className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2.5 text-sm font-medium text-black transition-all active:scale-[0.98] hover:bg-[#F2F2F2]"
             >
-              <span>Book a call</span>
+              <span>Get Started</span>
               <div className="flex h-6 w-6 items-center justify-center rounded-full bg-black/5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-[1px] group-hover:scale-105">
                 <svg
                   width="12"
@@ -145,7 +145,7 @@ export default function Navbar() {
                 onClick={() => setIsOpen(false)}
                 className="mt-8 rounded-full bg-white px-8 py-4 text-lg font-medium text-black"
               >
-                Book a call
+                Get Started
               </motion.a>
             </div>
           </motion.div>

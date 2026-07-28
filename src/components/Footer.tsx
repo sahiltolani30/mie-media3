@@ -53,10 +53,10 @@ export default function Footer() {
           transition={{ duration: 1, ease: [0.32, 0.72, 0, 1] }}
           className="w-full flex flex-col items-center"
         >
-          <h2 className="text-6xl md:text-8xl lg:text-[10rem] font-black tracking-tighter text-white mb-8 leading-none overflow-hidden">
-            <AnimatedWord text="Ready to " />
-            <br className="md:hidden" />
-            <AnimatedWord text="begin?" className="text-gradient-primary" />
+          <h2 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter text-white mb-8 leading-none overflow-hidden max-w-5xl mx-auto">
+            <AnimatedWord text="Ready to build content " />
+            <br className="hidden lg:block" />
+            <AnimatedWord text="people actually watch?" className="text-gradient-primary" />
           </h2>
           
           <motion.p
@@ -66,7 +66,7 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ delay: 0.4, duration: 0.8 }}
           >
-            The predictable client acquisition system for service businesses. We build the content, manage the ads, and scale your trust.
+            Let's create videos that help your brand stand out, attract customers and grow consistently.
           </motion.p>
 
           <motion.a
@@ -79,7 +79,7 @@ export default function Footer() {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
           >
-            <span>Book your strategy call</span>
+            <span>Book a Free Strategy Call</span>
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-black/5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-[1px] group-hover:scale-105">
               <svg
                 width="16"
@@ -115,7 +115,7 @@ export default function Footer() {
           >
             <h3 className="text-2xl font-black text-white mb-6 tracking-tighter">MIU MEDIA</h3>
             <p className="text-white/40 text-sm leading-relaxed max-w-xs mb-8">
-              The predictable client acquisition system for service businesses. We build the content, manage the ads, and scale your trust.
+              Creative Content Studio. AI UGC &mdash; Short Form Editing &mdash; Talking Head Videos &mdash; Faceless Content
             </p>
             <div className="flex items-center gap-3">
               {/* Instagram Icon */}

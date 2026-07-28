@@ -27,8 +27,8 @@ const cardVariants: Variants = {
 export default function Services() {
   const services = [
     {
-      title: "Video production for service businesses",
-      desc: "Short-form video content designed to educate, establish authority, and convert viewers into prospects.",
+      title: "AI UGC Videos",
+      desc: "Creator-style video ads generated at scale. Built for Meta, TikTok and YouTube campaigns that convert.",
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path d="M23 7l-7 5 7 5V7z" strokeLinecap="round" strokeLinejoin="round"/>
@@ -38,8 +38,8 @@ export default function Services() {
       colSpan: "md:col-span-7",
     },
     {
-      title: "Content strategy & scripting",
-      desc: "Research-led content that targets the questions your ideal clients are already asking online.",
+      title: "Talking Head Videos",
+      desc: "We transform your raw footage into polished, authority-building content. Professional edits, motion graphics and pacing that keeps viewers watching.",
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" strokeLinecap="round" strokeLinejoin="round"/>
@@ -49,8 +49,8 @@ export default function Services() {
       colSpan: "md:col-span-5",
     },
     {
-      title: "Social media management",
-      desc: "Consistent posting, community engagement, and growth-focused execution across key platforms.",
+      title: "Short Form Clipping",
+      desc: "Turn podcasts, interviews and long-form videos into dozens of high-performing Shorts, Reels and TikToks.",
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" strokeLinecap="round" strokeLinejoin="round"/>
@@ -60,8 +60,8 @@ export default function Services() {
       colSpan: "md:col-span-6",
     },
     {
-      title: "Meta ads management",
-      desc: "Performance campaigns built around proven creative and audience targeting -- optimised for lead quality, not vanity metrics.",
+      title: "Faceless Videos",
+      desc: "Scripted, edited and motion-designed videos that tell compelling stories without needing to appear on camera.",
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" strokeLinecap="round" strokeLinejoin="round"/>
@@ -101,10 +101,10 @@ export default function Services() {
             </span>
           </div>
           <h2 className="text-4xl md:text-5xl font-medium tracking-tight text-white mb-6">
-            A complete digital marketing system -- video, content, and paid ads under one roof
+            Content production built for modern brands.
           </h2>
           <p className="text-lg text-white/50 leading-relaxed">
-            Most agencies do content or ads. We build the full pipeline: from video production to Meta campaigns optimised for qualified lead generation.
+            We create videos engineered for every stage of your marketing funnel &mdash; from grabbing attention to driving conversions.
           </p>
         </motion.div>
 

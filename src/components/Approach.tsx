@@ -6,13 +6,13 @@ export default function Approach() {
   const items = [
     {
       step: "01",
-      title: "Why most paid ad strategies underperform",
-      desc: "Most agencies start with ads. Without warm, trust-building content to support them, even well-targeted campaigns attract cold, low-intent leads.",
+      title: "Content aligned with business goals",
+      desc: "Most production houses simply edit videos. We build content that aligns with your business goals -- whether that is more sales, stronger branding or higher engagement.",
     },
     {
       step: "02",
-      title: "The content-first acquisition model",
-      desc: "We build trust through video and content first -- so when prospects see your ads, they already know, like, and respect your brand.",
+      title: "Videos people remember",
+      desc: "Good content is not about making videos. It is about making videos people remember. Every piece we create is designed with your audience and your goals in mind.",
     },
   ];
 
@@ -29,12 +29,12 @@ export default function Approach() {
               transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
             >
               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 mb-8">
-                <span className="text-[11px] uppercase tracking-[0.2em] font-medium text-white/50">
-                  Our Approach
+                <span className="text-[11px] uppercase tracking-[0.2em] font-medium text-[#FF8500]">
+                  Why MIU Media
                 </span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-medium tracking-tight text-white mb-6 leading-tight max-w-sm">
-                We use organic content to build <span className="text-gradient-primary">trust</span> -- and paid ads to scale it.
+              <h2 className="text-4xl md:text-5xl font-medium tracking-tight text-white mb-6">
+                More than editors. A creative growth partner.
               </h2>
             </motion.div>
           </div>

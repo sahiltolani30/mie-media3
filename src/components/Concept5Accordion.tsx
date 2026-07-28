@@ -7,9 +7,9 @@ import { InteractiveFolderGallery } from "@/components/ui/interactive-folder-gal
 const services = [
   {
     id: "video",
-    title: "AI UGC Video",
-    tagline: "Cinematic. Educational. Authoritative.",
-    description: "We produce short-form cinematic video content designed specifically to educate your audience and establish your brand as the undisputed authority in your niche.",
+    title: "AI UGC Videos",
+    tagline: "Authentic. Scalable. High-converting.",
+    description: "Creator-style video ads generated at scale. Built for Meta, TikTok and YouTube campaigns that actually convert.",
     folder: "Video.production",
     photos: [
       { id: 1, image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop" },
@@ -19,9 +19,9 @@ const services = [
   },
   {
     id: "strategy",
-    title: "Content Strategy",
-    tagline: "Research-led. Targeted. Effective.",
-    description: "Stop guessing what to post. We build research-led content strategies that directly target the exact questions and pain points your ideal high-ticket clients are searching for.",
+    title: "Talking Head Videos",
+    tagline: "Professional. Engaging. Authority-building.",
+    description: "We transform raw footage into polished, authority-building content. Professional edits and pacing that keeps viewers watching.",
     folder: "Strategy.docs",
     photos: [
       { id: 1, image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop" },
@@ -31,14 +31,26 @@ const services = [
   },
   {
     id: "social",
-    title: "Social Media",
-    tagline: "Engaging. Consistent. Growing.",
-    description: "We handle the day-to-day execution. From community engagement to algorithmic growth hacking, we ensure your brand stays top-of-mind across all key platforms.",
+    title: "Short Form Clipping",
+    tagline: "Viral. Efficient. Platform-optimized.",
+    description: "Turn podcasts, interviews and long-form videos into dozens of high-performing Shorts, Reels and TikToks.",
     folder: "Social.media",
     photos: [
       { id: 1, image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800&auto=format&fit=crop" },
       { id: 2, image: "https://images.unsplash.com/photo-1616469829581-73993eb86b02?q=80&w=800&auto=format&fit=crop" },
       { id: 3, image: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?q=80&w=800&auto=format&fit=crop" },
+    ]
+  },
+  {
+    id: "faceless",
+    title: "Faceless Videos",
+    tagline: "Scripted. Story-driven. Anonymous.",
+    description: "Scripted, edited and motion-designed videos that tell compelling stories without needing to appear on camera.",
+    folder: "Faceless.content",
+    photos: [
+      { id: 1, image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" },
+      { id: 2, image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop" },
+      { id: 3, image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop" },
     ]
   }
 ];
@@ -76,7 +88,7 @@ export default function Concept5Accordion() {
           Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF8500] to-[#FE7D13]">Featured Work</span>
         </h2>
         <p className="text-lg text-[#DEDEDE] max-w-2xl mx-auto">
-          Explore the premium content, brand identities, and campaigns we've built for top architecture and interior design studios.
+          Explore the high-performing content we create for brands, creators and growing businesses.
         </p>
       </div>
 

@@ -19,10 +19,10 @@ export default function Problem() {
             </span>
           </div>
           <h2 className="text-4xl md:text-5xl font-medium tracking-tight text-white mb-6">
-            Why most service businesses struggle to generate consistent leads online
+            Most brands don't struggle with ideas.
           </h2>
           <p className="text-white/60 text-lg max-w-xl">
-            Without a unified content and advertising system, even the best service providers stay stuck in the referral cycle.
+            They struggle with execution. Great marketing starts with content people actually want to watch.
           </p>
         </motion.div>
 
@@ -47,7 +47,7 @@ export default function Problem() {
             <div>
               <h3 className="text-2xl font-medium text-white mb-3">Inconsistent Content</h3>
               <p className="text-white/60 max-w-[40ch] leading-relaxed">
-                Posting inconsistent content with no clear strategy or conversion goal.
+                No system for producing high-quality content at the pace modern marketing demands.
               </p>
             </div>
           </motion.div>
@@ -67,9 +67,9 @@ export default function Problem() {
             </div>
             
             <div>
-              <h3 className="text-xl font-medium text-white mb-2">Burning Ad Budget</h3>
+              <h3 className="text-xl font-medium text-white mb-2">Low-Performing Creatives</h3>
               <p className="text-sm text-white/50 leading-relaxed">
-                Running paid ads without strong creative -- burning budget on poor results.
+                Ad creatives that fail to convert because they lack authenticity and engagement.
               </p>
             </div>
           </motion.div>
@@ -90,9 +90,9 @@ export default function Problem() {
             </div>
             
             <div>
-              <h3 className="text-xl font-medium text-white mb-2">Referral Reliance</h3>
+              <h3 className="text-xl font-medium text-white mb-2">Slow Turnaround</h3>
               <p className="text-sm text-white/50 leading-relaxed">
-                Over-relying on word-of-mouth referrals for business growth.
+                Weeks of wait time for edits that should take days. Opportunities missed.
               </p>
             </div>
           </motion.div>
@@ -106,10 +106,10 @@ export default function Problem() {
             className="md:col-span-8 glass-card p-10 flex flex-col justify-center items-center text-center cursor-default hover:-translate-y-1 transition-transform duration-300"
           >
             <h3 className="text-2xl md:text-3xl font-medium text-white mb-4">
-              No Conversion System
+              No Scalable Content System
             </h3>
             <p className="text-white/60 max-w-[40ch] leading-relaxed">
-              No system for turning social media attention into qualified inquiries.
+              Ideas die in a backlog. No repeatable process to go from concept to published, performing content.
             </p>
           </motion.div>
         </div>

@@ -3,11 +3,11 @@
 import { motion } from "framer-motion";
 
 const stages = [
-  { label: "Social Media Reach", value: 100, desc: "Potential audience sees your content", isTop: true, leak: false },
-  { label: "No Content Strategy", value: 60, desc: "40% lost — no hooks, no consistency", isTop: false, leak: true, leakAmt: 40 },
-  { label: "Weak Call-to-Action", value: 30, desc: "30% lost — no clear next step for viewers", isTop: false, leak: true, leakAmt: 30 },
-  { label: "No Follow-up System", value: 12, desc: "18% lost — enquiries fall through the cracks", isTop: false, leak: true, leakAmt: 18 },
-  { label: "Booked Clients", value: 12, desc: "Only 12% of potential actually converts", isTop: false, leak: false },
+  { label: "Content Ideas", value: 100, desc: "Potential content your brand could produce", isTop: true, leak: false },
+  { label: "No Production System", value: 60, desc: "40% lost — ideas die without a team to execute them", isTop: false, leak: true, leakAmt: 40 },
+  { label: "Slow Turnaround", value: 30, desc: "30% lost — content arrives too late to be relevant", isTop: false, leak: true, leakAmt: 30 },
+  { label: "Inconsistent Quality", value: 12, desc: "18% lost — output varies, brand trust erodes", isTop: false, leak: true, leakAmt: 18 },
+  { label: "Published Content", value: 12, desc: "Only 12% of planned content actually gets made", isTop: false, leak: false },
 ];
 
 export default function ProblemV2BrokenFunnel() {
@@ -25,10 +25,10 @@ export default function ProblemV2BrokenFunnel() {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <p className="text-white/30 uppercase tracking-[0.25em] text-xs mb-4">Revenue Audit</p>
+          <p className="text-white/30 uppercase tracking-[0.25em] text-xs mb-4">Content Audit</p>
           <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter">
-            Here&rsquo;s where your leads<br />
-            <span className="text-red-400">are leaking.</span>
+            Here&rsquo;s where your content pipeline<br />
+            <span className="text-red-400">is breaking.</span>
           </h2>
         </motion.div>
 
@@ -98,9 +98,9 @@ export default function ProblemV2BrokenFunnel() {
           className="text-center mt-16"
         >
           <p className="text-white/30 text-base max-w-lg mx-auto leading-relaxed">
-            Most service businesses convert{" "}
+            Most brands publish{" "}
             <span className="text-[#FF8500] font-semibold">less than 12%</span>{" "}
-            of their potential audience into booked clients. The other 88% is pure leak.
+            of the content they plan. The other 88% never gets made.
           </p>
         </motion.div>
       </div>

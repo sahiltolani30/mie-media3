@@ -14,16 +14,16 @@ export default function HowItWorks() {
 
   const steps = [
     {
-      title: "01 Position: Clarify your message",
-      desc: "We identify your ideal client profile, define your positioning, and develop content angles that speak directly to high-value prospects.",
+      title: "Discovery",
+      desc: "We learn your brand voice, audience and content goals. You tell us what you need -- we handle the rest.",
     },
     {
-      title: "02 Produce: Create content that builds authority",
-      desc: "We produce videos, write scripts, and develop ad creative assets designed to capture attention and establish expertise in your market.",
+      title: "Production",
+      desc: "Our team scripts, edits, animates and delivers platform-ready content. Fast turnaround, no back-and-forth.",
     },
     {
-      title: "03 Scale: Deploy and optimise Meta ad campaigns",
-      desc: "We launch performance-focused Meta campaigns and optimise continuously based on lead quality and cost-per-acquisition — not surface metrics.",
+      title: "Optimize",
+      desc: "We refine creative based on performance data so every new piece outperforms the last.",
     },
   ];
 
@@ -43,7 +43,7 @@ export default function HowItWorks() {
             </span>
           </div>
           <h2 className="text-4xl md:text-5xl font-medium tracking-tight text-white mb-6">
-            Our 3-step growth framework for service businesses
+            A simple process. Consistent results.
           </h2>
         </motion.div>
 

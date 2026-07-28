@@ -37,16 +37,16 @@ function ParallaxText({ children, baseVelocity = 100 }: { children: React.ReactN
 
 export default function Marquee() {
   const words = [
-    "Video Production",
-    "Meta Ads Management",
-    "Social Media Growth",
+    "AI UGC Videos",
+    "Short Form Clipping",
+    "Talking Head Edits",
+    "Faceless Videos",
+    "Paid Creative",
+    "Organic Content",
+    "Personal Branding",
     "Content Strategy",
-    "Lead Generation",
-    "Short-Form Video",
-    "Brand Authority",
-    "Client Acquisition",
-    "Script Writing",
-    "Campaign Optimisation"
+    "Brand Growth",
+    "Video Production"
   ];
 
   return (

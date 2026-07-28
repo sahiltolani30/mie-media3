@@ -90,7 +90,7 @@ export default function Hero() {
               className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur-md mb-6 md:mb-8"
             >
               <span className="text-[11px] uppercase tracking-[0.2em] font-medium text-white/80">
-                Content-Powered Client Acquisition
+                Creative Content Studio
               </span>
             </motion.div>
 
@@ -98,15 +98,15 @@ export default function Hero() {
               variants={childVariants}
               className="text-5xl md:text-6xl lg:text-7xl tracking-tighter leading-[1.05] font-semibold text-white mb-6 md:mb-8 max-w-[800px]"
             >
-              Turn Your Expertise Into a <br />
-              <span className="text-gradient-primary">Predictable Client Acquisition System</span>
+              We create videos <br />
+              <span className="text-gradient-primary">people stop scrolling for.</span>
             </motion.h1>
 
             <motion.p
               variants={childVariants}
               className="text-lg md:text-xl text-white/60 leading-relaxed max-w-[50ch] mb-8 md:mb-12"
             >
-              We produce <strong className="text-white">high-converting video content</strong>, manage your <strong className="text-white">social media presence</strong>, and run performance-driven <strong className="text-white">Meta ad campaigns</strong> -- so <strong className="text-white">qualified leads</strong> come to you, consistently.
+              High-performing video for brands, creators and businesses. From AI UGC ads to viral short-form clips &mdash; content designed to build trust and generate results.
             </motion.p>
 
             <motion.div
@@ -117,7 +117,7 @@ export default function Hero() {
                 href="#book"
                 className="group relative inline-flex items-center justify-center gap-3 rounded-full bg-[#FF8500] px-8 py-4 text-base font-semibold text-black transition-all active:scale-[0.98] hover:bg-[#FE7D13] shadow-[0_0_40px_-10px_rgba(255,133,0,0.5)] hover:shadow-[0_0_60px_-10px_rgba(255,133,0,0.7)]"
               >
-                <span>Book a free strategy call</span>
+                <span>Get Started</span>
               </a>
               <a
                 href="#how-it-works"

@@ -4,12 +4,12 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
 
 const checks = [
-  "You offer a premium service but you hate how you show up online.",
-  "You have tried paid ads, but the leads arrive cold and require too much convincing.",
-  "You want to be seen as the authority in your space -- not just another option people compare.",
-  "You know content works. You just do not have the time or the system to execute it consistently.",
-  "Your best clients came from referrals. You want a system that replicates that at scale.",
-  "You are tired of paying for attention. You are ready to earn it.",
+  "You are launching a product and need high-converting video ads -- fast.",
+  "You are building a personal brand but have no time to edit your own content.",
+  "You want to scale content output without hiring an in-house editing team.",
+  "Your current ad creatives are underperforming and you need better video that converts.",
+  "You know consistent content drives growth but you have no system to produce it.",
+  "You want a reliable content partner -- not a freelancer who disappears mid-project.",
 ];
 
 export default function ICPV2C1CheckboxMirror() {
@@ -20,7 +20,7 @@ export default function ICPV2C1CheckboxMirror() {
   });
 
   return (
-    <section ref={containerRef} className="relative w-full bg-[#050505] border-b border-white/5 py-32 px-6">
+    <section id="icp" ref={containerRef} className="relative w-full bg-[#050505] border-b border-white/5 py-32 px-6">
 
 
       <div className="mx-auto max-w-7xl mt-12">
