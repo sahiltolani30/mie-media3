@@ -183,8 +183,8 @@ export default function Footer() {
           >
             <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/80">LEGAL</h4>
             <div className="flex flex-col gap-4">
-              <a href="#" className="text-sm text-white/50 hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="text-sm text-white/50 hover:text-white transition-colors">Terms of Service</a>
+              <a href="/privacy-policy" className="text-sm text-white/50 hover:text-white transition-colors">Privacy Policy</a>
+              <a href="/terms-of-service" className="text-sm text-white/50 hover:text-white transition-colors">Terms of Service</a>
             </div>
           </motion.div>
         </div>
