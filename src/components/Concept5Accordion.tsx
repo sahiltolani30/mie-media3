@@ -3,57 +3,53 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { InteractiveFolderGallery } from "@/components/ui/interactive-folder-gallery";
+import { featuredWorkVideos } from "@/config/videos";
 
-const services = [
+// -------------------------------------------------------------------------
+// SERVICE COPY - edit text here
+// Videos/images are managed separately in src/config/videos.ts
+// -------------------------------------------------------------------------
+const servicesMeta = [
   {
     id: "video",
     title: "AI UGC Videos",
     tagline: "Authentic. Scalable. High-converting.",
     description: "Creator-style video ads generated at scale. Built for Meta, TikTok and YouTube campaigns that actually convert.",
-    folder: "Video.production",
-    photos: [
-      { id: 1, image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop" },
-      { id: 2, image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=800&auto=format&fit=crop" },
-      { id: 3, image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800&auto=format&fit=crop" },
-    ]
+    folder: "AI UGC Videos",
   },
   {
     id: "strategy",
     title: "Talking Head Videos",
     tagline: "Professional. Engaging. Authority-building.",
     description: "We transform raw footage into polished, authority-building content. Professional edits and pacing that keeps viewers watching.",
-    folder: "Strategy.docs",
-    photos: [
-      { id: 1, image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop" },
-      { id: 2, image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=800&auto=format&fit=crop" },
-      { id: 3, image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=800&auto=format&fit=crop" },
-    ]
+    folder: "Talking Head Videos",
   },
   {
     id: "social",
     title: "Short Form Clipping",
     tagline: "Viral. Efficient. Platform-optimized.",
     description: "Turn podcasts, interviews and long-form videos into dozens of high-performing Shorts, Reels and TikToks.",
-    folder: "Social.media",
-    photos: [
-      { id: 1, image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800&auto=format&fit=crop" },
-      { id: 2, image: "https://images.unsplash.com/photo-1616469829581-73993eb86b02?q=80&w=800&auto=format&fit=crop" },
-      { id: 3, image: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?q=80&w=800&auto=format&fit=crop" },
-    ]
+    folder: "Short Form Clipping",
   },
   {
     id: "faceless",
     title: "Faceless Videos",
     tagline: "Scripted. Story-driven. Anonymous.",
     description: "Scripted, edited and motion-designed videos that tell compelling stories without needing to appear on camera.",
-    folder: "Faceless.content",
-    photos: [
-      { id: 1, image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" },
-      { id: 2, image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop" },
-      { id: 3, image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop" },
-    ]
-  }
+    folder: "Faceless Videos",
+  },
 ];
+
+// Merge copy with video/image config
+const services = servicesMeta.map((meta) => {
+  const videoConfig = featuredWorkVideos.find((v) => v.id === meta.id);
+  const photos = (videoConfig?.slots ?? []).map((slot, i) => ({
+    id: i + 1,
+    image: slot.image,
+    video: slot.video ?? undefined,
+  }));
+  return { ...meta, photos };
+});
 
 export default function Concept5Accordion() {
   const [activeId, setActiveId] = useState<string>("video");
@@ -168,6 +164,7 @@ export default function Concept5Accordion() {
                     <InteractiveFolderGallery 
                       folderName={service.folder}
                       photos={service.photos}
+                      dragHintText="Drag any video down to close"
                     />
                   </div>
                 </motion.div>
