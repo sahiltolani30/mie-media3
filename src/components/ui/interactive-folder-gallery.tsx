@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export interface GalleryPhoto {
   id: string | number;
   image: string;
+  video?: string;
 }
 
 const defaultPhotos: GalleryPhoto[] = [
@@ -25,11 +26,12 @@ export interface InteractiveFolderGalleryProps {
 export function InteractiveFolderGallery({
   photos = defaultPhotos,
   folderName = "Photography.gallery",
-  dragHintText = "Drag any photo down to close",
+  dragHintText = "Drag any video down to close",
   className
 }: InteractiveFolderGalleryProps) {
   const [isFolderOpen, setIsFolderOpen] = useState(false);
   const [hoverFolder, setHoverFolder] = useState(false);
+  const [fullscreenPhoto, setFullscreenPhoto] = useState<GalleryPhoto | null>(null);
 
   return (
     <div className={`w-full py-32 relative ${className || ""}`}>
@@ -48,7 +50,9 @@ export function InteractiveFolderGallery({
 
           <div className="absolute bottom-10 z-10 flex justify-center">
             {photos.map((photo, i) => {
-              const offset = i - 2;
+            const offset = i - (photos.length - 1) / 2;
+
+            const openGap = Math.min(130, photos.length > 1 ? 260 / (photos.length - 1) : 0);
 
               const stackY = hoverFolder ? offset * -10 - 40 : offset * -5;
               const stackX = hoverFolder ? offset * 30 : offset * 3;
@@ -56,7 +60,7 @@ export function InteractiveFolderGallery({
               const stackScale = 1 - Math.abs(offset) * 0.03;
 
               const openY = -130;
-              const openX = offset * 130;
+              const openX = offset * openGap;
               const openRotate = 0;
               const openScale = 1.05;
 
@@ -71,7 +75,12 @@ export function InteractiveFolderGallery({
                       setHoverFolder(false);
                     }
                   }}
-                  className={`absolute bottom-0 w-56 h-72 rounded-xl shadow-[0_20px_40px_rgba(0,0,0,0.5)] overflow-hidden border border-white/20 origin-bottom ${isFolderOpen ? "cursor-grab active:cursor-grabbing pointer-events-auto" : "pointer-events-none"}`}
+                  onClick={() => {
+                    if (isFolderOpen) {
+                      setFullscreenPhoto(photo);
+                    }
+                  }}
+                  className={`absolute bottom-0 w-56 h-72 rounded-xl shadow-[0_20px_40px_rgba(0,0,0,0.5)] overflow-hidden border border-white/20 origin-bottom ${isFolderOpen ? "cursor-grab active:cursor-grabbing pointer-events-auto hover:ring-2 hover:ring-white/50 transition-shadow" : "pointer-events-none"}`}
                   animate={!isFolderOpen ? {
                     y: stackY,
                     x: stackX,
@@ -89,7 +98,26 @@ export function InteractiveFolderGallery({
                   whileDrag={isFolderOpen ? { scale: openScale + 0.1, rotate: 5, zIndex: 150 } : {}}
                   transition={{ type: "spring", stiffness: 350, damping: 30 }}
                 >
-                  <img src={photo.image} alt="Gallery item" className="w-full h-full object-cover pointer-events-none" />
+                  {/* Only mount video when folder is open - prevents ANY video loading on page load */}
+                  {isFolderOpen && photo.video ? (
+                    <video
+                      src={photo.video}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="none"
+                      poster={photo.image}
+                      className="w-full h-full object-cover pointer-events-none"
+                    />
+                  ) : (
+                    <img
+                      src={photo.image}
+                      alt="Gallery item"
+                      loading="lazy"
+                      className="w-full h-full object-cover pointer-events-none"
+                    />
+                  )}
                 </motion.div>
               );
             })}
@@ -122,12 +150,58 @@ export function InteractiveFolderGallery({
 
         <motion.div 
           animate={{ opacity: isFolderOpen ? 1 : 0, y: isFolderOpen ? 0 : 50 }}
-          className="absolute bottom-10 px-6 py-3 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 backdrop-blur-md text-black/50 dark:text-white/50 text-sm font-medium uppercase tracking-widest pointer-events-none"
+          className="absolute bottom-10 px-6 py-3 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 backdrop-blur-md text-black/50 dark:text-white/50 text-sm font-medium tracking-wide pointer-events-none"
         >
           {dragHintText}
         </motion.div>
 
       </div>
+
+      {/* Fullscreen Overlay */}
+      <AnimatePresence>
+        {fullscreenPhoto && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-sm"
+            onClick={() => setFullscreenPhoto(null)}
+          >
+            <motion.div 
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative w-full max-w-sm md:max-w-md lg:max-w-lg aspect-[9/16] bg-black rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 mx-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button 
+                className="absolute top-4 right-4 text-white/70 hover:text-white bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full p-3 transition-colors z-50"
+                onClick={() => setFullscreenPhoto(null)}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+              </button>
+
+              {fullscreenPhoto.video ? (
+                <video
+                  src={fullscreenPhoto.video}
+                  autoPlay
+                  controls
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <img
+                  src={fullscreenPhoto.image}
+                  alt="Fullscreen view"
+                  className="w-full h-full object-cover"
+                />
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
