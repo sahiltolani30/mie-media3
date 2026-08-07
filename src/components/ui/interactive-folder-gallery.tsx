@@ -4,8 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export interface GalleryPhoto {
   id: string | number;
-  image: string;
-  video?: string;
+  image?: string;
+  video?: string | null;
 }
 
 const defaultPhotos: GalleryPhoto[] = [
@@ -98,26 +98,33 @@ export function InteractiveFolderGallery({
                   whileDrag={isFolderOpen ? { scale: openScale + 0.1, rotate: 5, zIndex: 150 } : {}}
                   transition={{ type: "spring", stiffness: 350, damping: 30 }}
                 >
-                  {/* Only mount video when folder is open - prevents ANY video loading on page load */}
-                  {isFolderOpen && photo.video ? (
+                  {photo.video ? (
                     <video
+                      ref={(el) => {
+                        if (el) {
+                          if (isFolderOpen) {
+                            el.play().catch(() => {});
+                          } else {
+                            el.pause();
+                            el.currentTime = 0;
+                          }
+                        }
+                      }}
                       src={photo.video}
-                      autoPlay
                       muted
                       loop
                       playsInline
-                      preload="none"
-                      poster={photo.image}
-                      className="w-full h-full object-cover pointer-events-none"
+                      preload="metadata"
+                      className="w-full h-full object-cover pointer-events-none bg-zinc-900"
                     />
-                  ) : (
+                  ) : photo.image ? (
                     <img
                       src={photo.image}
                       alt="Gallery item"
                       loading="lazy"
-                      className="w-full h-full object-cover pointer-events-none"
+                      className="w-full h-full object-cover pointer-events-none bg-zinc-900"
                     />
-                  )}
+                  ) : null}
                 </motion.div>
               );
             })}
@@ -191,13 +198,13 @@ export function InteractiveFolderGallery({
                   playsInline
                   className="w-full h-full object-cover"
                 />
-              ) : (
+              ) : fullscreenPhoto.image ? (
                 <img
                   src={fullscreenPhoto.image}
                   alt="Fullscreen view"
                   className="w-full h-full object-cover"
                 />
-              )}
+              ) : null}
             </motion.div>
           </motion.div>
         )}

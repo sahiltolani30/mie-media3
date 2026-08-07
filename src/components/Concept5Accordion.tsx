@@ -1,9 +1,49 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { InteractiveFolderGallery } from "@/components/ui/interactive-folder-gallery";
 import { featuredWorkVideos } from "@/config/videos";
+
+// Silently preloads all videos after page is fully loaded and idle
+function VideoPreloader({ urls }: { urls: string[] }) {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const start = () => {
+      // Wait 1s after load so critical page resources finish first
+      const timer = setTimeout(() => setReady(true), 1000);
+      return timer;
+    };
+
+    let timer: ReturnType<typeof setTimeout>;
+    if (document.readyState === "complete") {
+      timer = start();
+    } else {
+      const onLoad = () => { timer = start(); };
+      window.addEventListener("load", onLoad, { once: true });
+      return () => window.removeEventListener("load", onLoad);
+    }
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!ready) return null;
+
+  return (
+    <div aria-hidden="true" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", opacity: 0, pointerEvents: "none", left: -9999 }}>
+      {urls.map((url) => (
+        <video
+          key={url}
+          src={url}
+          muted
+          playsInline
+          preload="auto"
+        />
+      ))}
+    </div>
+  );
+}
+
 
 // -------------------------------------------------------------------------
 // SERVICE COPY - edit text here
@@ -54,8 +94,19 @@ const services = servicesMeta.map((meta) => {
 export default function Concept5Accordion() {
   const [activeId, setActiveId] = useState<string>("video");
 
+  // Collect every video URL once for the background preloader
+  const allVideoUrls = Array.from(
+    new Set(
+      featuredWorkVideos.flatMap((s) =>
+        s.slots.map((slot) => slot.video).filter((v): v is string => !!v)
+      )
+    )
+  );
+
   return (
     <section className="w-full bg-[#0a0a0a] text-white overflow-hidden py-24 relative">
+      {/* Preload all videos silently after page load */}
+      <VideoPreloader urls={allVideoUrls} />
 
 
       {/* Cinematic Dynamic Background */}
