@@ -115,7 +115,7 @@ export function InteractiveFolderGallery({
                       muted
                       loop
                       playsInline
-                      preload="metadata"
+                      preload="none"
                       className="w-full h-full object-cover pointer-events-none bg-zinc-900"
                     >
                       {photo.webm && <source src={`${photo.webm}#t=0.001`} type="video/webm" />}

@@ -51,8 +51,8 @@ function VideoPreloader({ files }: { files: { video: string; webm?: string }[] }
             }
           }}
         >
-          {file.webm && <source src={file.webm} type="video/webm" />}
-          <source src={file.video} type="video/mp4" />
+          {file.webm && <source src={`${file.webm}#t=0.001`} type="video/webm" />}
+          <source src={`${file.video}#t=0.001`} type="video/mp4" />
         </video>
       ))}
     </div>
