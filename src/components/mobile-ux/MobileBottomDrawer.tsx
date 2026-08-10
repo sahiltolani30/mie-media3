@@ -44,6 +44,8 @@ const services = servicesMeta.map((meta) => {
     image: slot.image,
     video: slot.video ?? undefined,
     webm: slot.webm ?? undefined,
+    cardVideo: slot.cardVideo ?? undefined,
+    cardWebm: slot.cardWebm ?? undefined,
   }));
   return { ...meta, photos };
 });

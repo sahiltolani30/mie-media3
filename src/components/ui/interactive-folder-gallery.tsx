@@ -51,7 +51,7 @@ export function InteractiveFolderGallery({
   }, []);
 
   useEffect(() => {
-    if (isFolderOpen || fullscreenPhoto) {
+    if (fullscreenPhoto) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
@@ -59,7 +59,7 @@ export function InteractiveFolderGallery({
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, [isFolderOpen, fullscreenPhoto]);
+  }, [fullscreenPhoto]);
 
   // Handle play/pause state for all card videos
   useEffect(() => {
@@ -228,7 +228,7 @@ export function InteractiveFolderGallery({
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.92, y: 20 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-sm md:max-w-md lg:max-w-lg aspect-[9/16] bg-black rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 mx-4"
+              className="relative w-full h-[100dvh] sm:h-auto sm:max-w-sm md:max-w-md lg:max-w-lg sm:aspect-[9/16] bg-black sm:rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl sm:border border-white/10 sm:mx-4"
               onClick={(e) => e.stopPropagation()}
             >
               <button
@@ -244,7 +244,7 @@ export function InteractiveFolderGallery({
                   autoPlay
                   playsInline
                   poster={fullscreenPhoto.image}
-                  className="w-full h-full object-cover bg-black"
+                  className="w-full h-full object-contain bg-black"
                 >
                   {/* Load HQ WebM if available, otherwise HQ MP4 */}
                   {fullscreenPhoto.webm && <source src={fullscreenPhoto.webm} type="video/webm" />}
