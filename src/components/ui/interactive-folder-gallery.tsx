@@ -7,6 +7,8 @@ export interface GalleryPhoto {
   image?: string;
   video?: string | null;
   webm?: string | null;
+  cardVideo?: string | null;
+  cardWebm?: string | null;
 }
 
 const defaultPhotos: GalleryPhoto[] = [
@@ -35,16 +37,13 @@ export function InteractiveFolderGallery({
   const [fullscreenPhoto, setFullscreenPhoto] = useState<GalleryPhoto | null>(null);
   const [loadedVideos, setLoadedVideos] = useState<boolean>(false);
 
-  // Store refs to each card's video element so we can reuse them in fullscreen
+  // Store refs to each card's video element so we can play/pause them
   const videoRefs = useRef<Map<string | number, HTMLVideoElement>>(new Map());
-  // Container ref where we will move the video DOM node for fullscreen
-  const fullscreenContainerRef = useRef<HTMLDivElement>(null);
-  // Track original parent of video so we can return it when closing
-  const originalParentRef = useRef<{ el: HTMLVideoElement; parent: Element; nextSibling: Node | null } | null>(null);
 
   useEffect(() => {
     // Wait just 100ms so the initial HTML parses (unblocking the Safari blue bar),
-    // then trigger the videos to start downloading DURING the PreloaderScreen
+    // then trigger the TINY card videos to start downloading DURING the PreloaderScreen.
+    // Total size is only ~5MB so this will not slow down the site.
     const timer = setTimeout(() => {
       setLoadedVideos(true);
     }, 100);
@@ -52,7 +51,7 @@ export function InteractiveFolderGallery({
   }, []);
 
   useEffect(() => {
-    if (isFolderOpen) {
+    if (isFolderOpen || fullscreenPhoto) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
@@ -60,64 +59,24 @@ export function InteractiveFolderGallery({
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, [isFolderOpen]);
+  }, [isFolderOpen, fullscreenPhoto]);
 
-  // When fullscreen opens, physically move the already-playing video element into the overlay
-  useEffect(() => {
-    if (fullscreenPhoto && fullscreenPhoto.video) {
-      const videoEl = videoRefs.current.get(fullscreenPhoto.id);
-      const container = fullscreenContainerRef.current;
-      if (!videoEl || !container) return;
-
-      // Save original position so we can put it back
-      originalParentRef.current = {
-        el: videoEl,
-        parent: videoEl.parentElement!,
-        nextSibling: videoEl.nextSibling,
-      };
-
-      // Style the video for fullscreen
-      videoEl.classList.remove("pointer-events-none");
-      videoEl.controls = true;
-      videoEl.style.width = "100%";
-      videoEl.style.height = "100%";
-      videoEl.style.objectFit = "cover";
-      videoEl.style.borderRadius = "0";
-
-      container.appendChild(videoEl);
-    } else {
-      // Move the video element back to its card
-      const saved = originalParentRef.current;
-      if (saved) {
-        const { el, parent, nextSibling } = saved;
-        el.controls = false;
-        el.classList.add("pointer-events-none");
-        el.style.width = "";
-        el.style.height = "";
-        el.style.objectFit = "";
-        el.style.borderRadius = "";
-
-        if (nextSibling) {
-          parent.insertBefore(el, nextSibling);
-        } else {
-          parent.appendChild(el);
-        }
-        originalParentRef.current = null;
-      }
-    }
-  }, [fullscreenPhoto]);
-
-  // Handle play/pause state for all videos when folder opens/closes
+  // Handle play/pause state for all card videos when folder opens/closes
   useEffect(() => {
     videoRefs.current.forEach((el) => {
       if (isFolderOpen) {
-        el.play().catch(() => {});
+        // Only auto-play if we are NOT in fullscreen, to avoid audio/video conflicts
+        if (!fullscreenPhoto) {
+           el.play().catch(() => {});
+        } else {
+           el.pause();
+        }
       } else {
         el.pause();
         el.currentTime = 0;
       }
     });
-  }, [isFolderOpen]);
+  }, [isFolderOpen, fullscreenPhoto]);
 
   const setVideoRef = useCallback((id: string | number) => (el: HTMLVideoElement | null) => {
     if (el) {
@@ -156,6 +115,10 @@ export function InteractiveFolderGallery({
               const openRotate = 0;
               const openScale = 1.05;
 
+              // Use card-specific videos if they exist, otherwise fallback to main video (for backwards compatibility)
+              const videoSrc = photo.cardVideo || photo.video;
+              const webmSrc = photo.cardWebm || photo.webm;
+
               return (
                 <motion.div
                   key={photo.id}
@@ -190,7 +153,7 @@ export function InteractiveFolderGallery({
                   whileDrag={isFolderOpen ? { scale: openScale + 0.1, rotate: 5, zIndex: 150 } : {}}
                   transition={{ type: "spring", stiffness: 350, damping: 30 }}
                 >
-                  {photo.video ? (
+                  {videoSrc ? (
                     <video
                       ref={setVideoRef(photo.id)}
                       poster={photo.image}
@@ -200,8 +163,8 @@ export function InteractiveFolderGallery({
                       preload={loadedVideos ? "auto" : "none"}
                       className="w-full h-full object-cover pointer-events-none bg-zinc-900"
                     >
-                      {photo.webm && <source src={photo.webm} type="video/webm" />}
-                      <source src={photo.video} type="video/mp4" />
+                      {webmSrc && <source src={webmSrc} type="video/webm" />}
+                      <source src={videoSrc} type="video/mp4" />
                     </video>
                   ) : photo.image ? (
                     <img
@@ -252,7 +215,7 @@ export function InteractiveFolderGallery({
 
       </div>
 
-      {/* Fullscreen Overlay */}
+      {/* Fullscreen Overlay - Loads original HQ video dynamically */}
       <AnimatePresence>
         {fullscreenPhoto && (
           <motion.div
@@ -278,20 +241,25 @@ export function InteractiveFolderGallery({
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
               </button>
 
-              {/* The already-playing video will be moved into this div by the useEffect above */}
-              <div
-                ref={fullscreenContainerRef}
-                className="w-full h-full"
-              />
-
-              {/* Fallback for image-only items */}
-              {fullscreenPhoto && !fullscreenPhoto.video && fullscreenPhoto.image && (
+              {fullscreenPhoto.video ? (
+                <video
+                  controls
+                  autoPlay
+                  playsInline
+                  poster={fullscreenPhoto.image}
+                  className="w-full h-full object-cover bg-black"
+                >
+                  {/* Load HQ WebM if available, otherwise HQ MP4 */}
+                  {fullscreenPhoto.webm && <source src={fullscreenPhoto.webm} type="video/webm" />}
+                  <source src={fullscreenPhoto.video} type="video/mp4" />
+                </video>
+              ) : fullscreenPhoto.image ? (
                 <img
                   src={fullscreenPhoto.image}
                   alt="Fullscreen view"
                   className="w-full h-full object-cover"
                 />
-              )}
+              ) : null}
             </motion.div>
           </motion.div>
         )}

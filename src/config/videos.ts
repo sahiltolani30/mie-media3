@@ -21,10 +21,14 @@ export type VideoSlot = {
   label: string;
   /** Fallback image shown if video fails to load */
   image?: string;
-  /** Path to .mp4 in /public. Use null to show image only. */
+  /** Path to original HQ .mp4 in /public for fullscreen viewing. */
   video: string | null;
-  /** Path to optimized .webm in /public (smaller file size) */
+  /** Path to original HQ .webm in /public for fullscreen viewing. */
   webm?: string | null;
+  /** Path to heavily compressed .mp4 for the small card thumbnail. */
+  cardVideo?: string | null;
+  /** Path to heavily compressed .webm for the small card thumbnail. */
+  cardWebm?: string | null;
 };
 
 export type ServiceVideos = {
@@ -42,30 +46,40 @@ export const featuredWorkVideos: ServiceVideos[] = [
         image: "/videos/posters/trial001.jpg",
         video: "/videos/talking-head/trial001.mp4",
         webm: "/videos/talking-head/trial001.webm",
+        cardVideo: "/videos/card/talking-head/trial001.mp4",
+        cardWebm: "/videos/card/talking-head/trial001.webm",
       },
       {
         label: "Talking head video sample 2",
         image: "/videos/posters/s1.jpg",
         video: "/videos/talking-head/s1.mp4",
         webm: "/videos/talking-head/s1.webm",
+        cardVideo: "/videos/card/talking-head/s1.mp4",
+        cardWebm: "/videos/card/talking-head/s1.webm",
       },
       {
         label: "Talking head video sample 3",
         image: "/videos/posters/t13-2.jpg",
         video: "/videos/talking-head/t13-2.mp4",
         webm: "/videos/talking-head/t13-2.webm",
+        cardVideo: "/videos/card/talking-head/t13-2.mp4",
+        cardWebm: "/videos/card/talking-head/t13-2.webm",
       },
       {
         label: "Talking head video sample 4",
         image: "/videos/posters/t15.jpg",
         video: "/videos/talking-head/t15.mp4",
         webm: "/videos/talking-head/t15.webm",
+        cardVideo: "/videos/card/talking-head/t15.mp4",
+        cardWebm: "/videos/card/talking-head/t15.webm",
       },
       {
         label: "Talking head video sample 5",
         image: "/videos/posters/t18-2.jpg",
         video: "/videos/talking-head/t18-2.mp4",
         webm: "/videos/talking-head/t18-2.webm",
+        cardVideo: "/videos/card/talking-head/t18-2.mp4",
+        cardWebm: "/videos/card/talking-head/t18-2.webm",
       },
     ],
   },
@@ -78,18 +92,24 @@ export const featuredWorkVideos: ServiceVideos[] = [
         image: "/videos/posters/t03.jpg",
         video: "/videos/clipping/t03.mp4",
         webm: "/videos/clipping/t03.webm",
+        cardVideo: "/videos/card/clipping/t03.mp4",
+        cardWebm: "/videos/card/clipping/t03.webm",
       },
       {
         label: "Short form clip sample 2",
         image: "/videos/posters/m1.jpg",
         video: "/videos/clipping/m1.mp4",
         webm: "/videos/clipping/m1.webm",
+        cardVideo: "/videos/card/clipping/m1.mp4",
+        cardWebm: "/videos/card/clipping/m1.webm",
       },
       {
         label: "Short form clip sample 3",
         image: "/videos/posters/craziest-customer.jpg",
         video: "/videos/clipping/craziest-customer.mp4",
         webm: "/videos/clipping/craziest-customer.webm",
+        cardVideo: "/videos/card/clipping/craziest-customer.mp4",
+        cardWebm: "/videos/card/clipping/craziest-customer.webm",
       },
     ],
   },
@@ -102,12 +122,16 @@ export const featuredWorkVideos: ServiceVideos[] = [
         image: "/videos/posters/motiongraphics.jpg",
         video: "/videos/faceless/motiongraphics.mp4",
         webm: "/videos/faceless/motiongraphics.webm",
+        cardVideo: "/videos/card/faceless/motiongraphics.mp4",
+        cardWebm: "/videos/card/faceless/motiongraphics.webm",
       },
       {
         label: "Faceless video sample 2",
         image: "/videos/posters/t13.jpg",
         video: "/videos/faceless/t13.mp4",
         webm: "/videos/faceless/t13.webm",
+        cardVideo: "/videos/card/faceless/t13.mp4",
+        cardWebm: "/videos/card/faceless/t13.webm",
       },
     ],
   },
@@ -120,8 +144,9 @@ export const featuredWorkVideos: ServiceVideos[] = [
         image: "/videos/posters/pe09-3.jpg",
         video: "/videos/ai-ugc/pe09-3.mp4",
         webm: "/videos/ai-ugc/pe09-3.webm",
+        cardVideo: "/videos/card/ai-ugc/pe09-3.mp4",
+        cardWebm: "/videos/card/ai-ugc/pe09-3.webm",
       },
     ],
   },
 ];
-
