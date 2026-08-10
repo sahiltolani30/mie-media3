@@ -119,7 +119,7 @@ export function InteractiveFolderGallery({
                   whileDrag={isFolderOpen ? { scale: openScale + 0.1, rotate: 5, zIndex: 150 } : {}}
                   transition={{ type: "spring", stiffness: 350, damping: 30 }}
                 >
-                  {photo.video ? (
+                  {photo.video && loadedVideos ? (
                     <video
                       ref={(el) => {
                         if (el) {
@@ -136,7 +136,7 @@ export function InteractiveFolderGallery({
                       muted
                       loop
                       playsInline
-                      preload={loadedVideos ? "metadata" : "none"}
+                      preload="metadata"
                       className="w-full h-full object-cover pointer-events-none bg-zinc-900"
                     >
                       {photo.webm && <source src={`${photo.webm}#t=0.001`} type="video/webm" />}
@@ -149,7 +149,9 @@ export function InteractiveFolderGallery({
                       loading="lazy"
                       className="w-full h-full object-cover pointer-events-none bg-zinc-900"
                     />
-                  ) : null}
+                  ) : (
+                    <div className="w-full h-full bg-zinc-900" />
+                  )}
                 </motion.div>
               );
             })}
