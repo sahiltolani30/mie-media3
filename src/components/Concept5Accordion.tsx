@@ -186,9 +186,20 @@ export default function Concept5Accordion() {
                         <h3 className="text-xl md:text-2xl font-light text-[#FF8500] mb-4 italic">
                           "{service.tagline}"
                         </h3>
-                        <p className="text-lg text-white/60 leading-relaxed max-w-md">
+                        <p className="text-lg text-white/60 leading-relaxed max-w-md mb-8 lg:mb-0">
                           {service.description}
                         </p>
+
+                        {/* Mobile Inline Visual (Hidden on Desktop) */}
+                        <div className="block lg:hidden w-full max-w-sm mx-auto mt-8">
+                          <div className="scale-[0.8] sm:scale-90 origin-top h-[400px] flex items-center justify-center">
+                            <InteractiveFolderGallery 
+                              folderName={service.folder}
+                              photos={service.photos}
+                              dragHintText="Swipe down to close"
+                            />
+                          </div>
+                        </div>
                       </div>
                     </motion.div>
                   )}
@@ -198,8 +209,8 @@ export default function Concept5Accordion() {
           })}
         </div>
 
-        {/* Right: Dynamic Visuals */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center relative min-h-[500px]">
+        {/* Right: Dynamic Visuals (Hidden on Mobile) */}
+        <div className="hidden lg:flex w-full lg:w-1/2 items-center justify-center relative min-h-[500px]">
           <AnimatePresence mode="wait">
             {services.map((service) => (
               activeId === service.id && (
