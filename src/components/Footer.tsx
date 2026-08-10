@@ -70,7 +70,7 @@ export default function Footer() {
           </motion.p>
 
           <motion.a
-            href="mailto:make.it.up12business@gmail.com"
+            href="/book"
             className="group relative inline-flex items-center justify-center gap-4 rounded-full bg-white px-10 py-5 text-xl font-medium text-black transition-all active:scale-[0.98] hover:bg-[#F2F2F2] shadow-[0_0_50px_-15px_rgba(255,255,255,0.3)] hover:shadow-[0_0_70px_-15px_rgba(255,255,255,0.5)]"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

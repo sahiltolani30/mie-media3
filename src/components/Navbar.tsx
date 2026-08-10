@@ -55,7 +55,7 @@ export default function Navbar() {
           {/* Desktop CTA */}
           <div className="hidden md:flex">
             <a
-              href="#book"
+              href="/book"
               className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2.5 text-sm font-medium text-black transition-all active:scale-[0.98] hover:bg-[#F2F2F2]"
             >
               <span>Get Started</span>
@@ -141,7 +141,7 @@ export default function Navbar() {
                   duration: 0.5,
                   ease: [0.32, 0.72, 0, 1],
                 }}
-                href="#book"
+                href="/book"
                 onClick={() => setIsOpen(false)}
                 className="mt-8 rounded-full bg-white px-8 py-4 text-lg font-medium text-black"
               >
