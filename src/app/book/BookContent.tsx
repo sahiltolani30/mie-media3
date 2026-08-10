@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
+import ReactDOM from "react-dom";
 import Link from "next/link";
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import { CALENDLY_EMBED_URL } from "@/config/booking";
 
@@ -105,6 +106,14 @@ const trustPoints = [
 ];
 
 export default function BookContent() {
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+
+  useEffect(() => {
+    // Preconnect to Calendly domains to speed up DNS/TCP handshakes
+    ReactDOM.preconnect("https://calendly.com");
+    ReactDOM.preconnect("https://assets.calendly.com");
+  }, []);
+
   return (
     <div className="min-h-[100dvh] bg-[#080808] text-white overflow-x-hidden">
       <Navbar />
@@ -251,20 +260,42 @@ export default function BookContent() {
           >
             {/* Top accent line - liquid glass refraction */}
             <div
-              className="absolute top-0 left-0 right-0 h-px z-10"
+              className="absolute top-0 left-0 right-0 h-px z-20"
               style={{
                 background:
                   "linear-gradient(90deg, transparent, rgba(255,133,0,0.3), transparent)",
               }}
             />
 
+            {/* Skeleton Loading State */}
+            <AnimatePresence>
+              {!iframeLoaded && (
+                <motion.div
+                  initial={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-[#0a0a0a]"
+                >
+                  <div className="relative w-12 h-12 flex items-center justify-center">
+                    <div className="absolute inset-0 border-2 border-white/10 rounded-full" />
+                    <div className="absolute inset-0 border-2 border-[#FF8500] border-t-transparent rounded-full animate-spin" />
+                  </div>
+                  <div className="mt-4 text-xs font-mono tracking-widest text-white/40 animate-pulse uppercase">
+                    Loading Calendar
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <iframe
               src={CALENDLY_EMBED_URL}
+              onLoad={() => setIframeLoaded(true)}
               width="100%"
               height="100%"
               frameBorder="0"
               title="Book a discovery call with MiuMedia"
               style={{ display: "block", minHeight: 740 }}
+              className="relative z-0"
             />
           </div>
         </motion.div>
