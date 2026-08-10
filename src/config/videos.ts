@@ -39,8 +39,8 @@ export const featuredWorkVideos: ServiceVideos[] = [
     slots: [
       {
         label: "AI UGC video sample 1",
-
         video: "/videos/ai-ugc/pe09-3.mp4",
+        webm: "/videos/ai-ugc/pe09-3.webm",
       },
     ],
   },
@@ -81,18 +81,18 @@ export const featuredWorkVideos: ServiceVideos[] = [
     slots: [
       {
         label: "Short form clip sample 1",
-
         video: "/videos/clipping/t03.mp4",
+        webm: "/videos/clipping/t03.webm",
       },
       {
         label: "Short form clip sample 2",
-
         video: "/videos/clipping/m1.mp4",
+        webm: "/videos/clipping/m1.webm",
       },
       {
         label: "Short form clip sample 3",
-
         video: "/videos/clipping/craziest-customer.mp4",
+        webm: "/videos/clipping/craziest-customer.webm",
       },
     ],
   },
