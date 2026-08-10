@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export interface GalleryPhoto {
@@ -33,6 +33,18 @@ export function InteractiveFolderGallery({
   const [isFolderOpen, setIsFolderOpen] = useState(false);
   const [hoverFolder, setHoverFolder] = useState(false);
   const [fullscreenPhoto, setFullscreenPhoto] = useState<GalleryPhoto | null>(null);
+  const [loadedVideos, setLoadedVideos] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    if (isFolderOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isFolderOpen]);
 
   return (
     <div className={`w-full py-32 relative ${className || ""}`}>
@@ -103,11 +115,23 @@ export function InteractiveFolderGallery({
                     <video
                       ref={(el) => {
                         if (el) {
+                          // Handle play/pause state
                           if (isFolderOpen) {
                             el.play().catch(() => {});
                           } else {
                             el.pause();
                             el.currentTime = 0;
+                          }
+                          
+                          // Intersection Observer for lazy loading metadata
+                          if (!loadedVideos[photo.id]) {
+                            const observer = new IntersectionObserver((entries) => {
+                              if (entries[0].isIntersecting) {
+                                setLoadedVideos(prev => ({ ...prev, [photo.id]: true }));
+                                observer.disconnect();
+                              }
+                            }, { rootMargin: "500px" });
+                            observer.observe(el);
                           }
                         }
                       }}
@@ -115,7 +139,7 @@ export function InteractiveFolderGallery({
                       muted
                       loop
                       playsInline
-                      preload="metadata"
+                      preload={loadedVideos[photo.id] ? "metadata" : "none"}
                       className="w-full h-full object-cover pointer-events-none bg-zinc-900"
                     >
                       {photo.webm && <source src={`${photo.webm}#t=0.001`} type="video/webm" />}
