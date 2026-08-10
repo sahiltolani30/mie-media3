@@ -58,7 +58,7 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[100dvh] w-full flex flex-col justify-center pt-24 pb-12 md:pt-32 md:pb-20 overflow-x-hidden"
+      className="relative min-h-[100dvh] w-full flex flex-col justify-center pt-32 pb-12 md:pt-40 md:pb-20 overflow-x-hidden"
     >
       {/* Background with Parallax */}
       <motion.div className="absolute inset-0 z-0 overflow-hidden" style={{ y: bgY }}>
