@@ -36,10 +36,11 @@ export function InteractiveFolderGallery({
   const [loadedVideos, setLoadedVideos] = useState<boolean>(false);
 
   useEffect(() => {
-    // Wait for the PreloaderScreen to finish (approx 1.8s) before triggering metadata load
+    // Wait just 100ms so the initial HTML parses (unblocking the Safari blue bar), 
+    // then immediately inject videos so they buffer DURING the 1.8s PreloaderScreen
     const timer = setTimeout(() => {
       setLoadedVideos(true);
-    }, 1800);
+    }, 100);
     return () => clearTimeout(timer);
   }, []);
 
