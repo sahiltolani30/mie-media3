@@ -9,6 +9,7 @@ import MobileSnapScroll from "@/components/mobile-ux/MobileSnapScroll";
 // Silently preloads all videos after page is fully loaded and idle
 function VideoPreloader({ files }: { files: { video: string; webm?: string }[] }) {
   const [ready, setReady] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const start = () => {
@@ -32,12 +33,23 @@ function VideoPreloader({ files }: { files: { video: string; webm?: string }[] }
 
   return (
     <div aria-hidden="true" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", opacity: 0, pointerEvents: "none", left: -9999 }}>
-      {files.map((file) => (
+      {files.slice(0, currentIndex + 1).map((file, index) => (
         <video
           key={file.video}
           muted
           playsInline
           preload="auto"
+          onLoadedData={() => {
+            if (index === currentIndex && currentIndex < files.length - 1) {
+              setCurrentIndex(i => i + 1);
+            }
+          }}
+          onError={() => {
+             // If a video fails to load, skip to the next one to prevent stalling
+            if (index === currentIndex && currentIndex < files.length - 1) {
+              setCurrentIndex(i => i + 1);
+            }
+          }}
         >
           {file.webm && <source src={file.webm} type="video/webm" />}
           <source src={file.video} type="video/mp4" />
@@ -53,13 +65,6 @@ function VideoPreloader({ files }: { files: { video: string; webm?: string }[] }
 // Videos/images are managed separately in src/config/videos.ts
 // -------------------------------------------------------------------------
 const servicesMeta = [
-  {
-    id: "video",
-    title: "AI UGC Videos",
-    tagline: "Authentic. Scalable. High-converting.",
-    description: "Creator-style video ads generated at scale. Built for Meta, TikTok and YouTube campaigns that actually convert.",
-    folder: "AI UGC Videos",
-  },
   {
     id: "strategy",
     title: "Talking Head Videos",
@@ -81,6 +86,13 @@ const servicesMeta = [
     description: "Scripted, edited and motion-designed videos that tell compelling stories without needing to appear on camera.",
     folder: "Faceless Videos",
   },
+  {
+    id: "video",
+    title: "AI UGC Videos",
+    tagline: "Authentic. Scalable. High-converting.",
+    description: "Creator-style video ads generated at scale. Built for Meta, TikTok and YouTube campaigns that actually convert.",
+    folder: "AI UGC Videos",
+  },
 ];
 
 // Merge copy with video/image config
@@ -96,7 +108,7 @@ const services = servicesMeta.map((meta) => {
 });
 
 export default function Concept5Accordion() {
-  const [activeId, setActiveId] = useState<string>("video");
+  const [activeId, setActiveId] = useState<string>("strategy");
 
   return (
     <section className="w-full bg-[#0a0a0a] text-white overflow-hidden py-24 relative">

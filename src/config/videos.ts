@@ -34,17 +34,6 @@ export type ServiceVideos = {
 
 export const featuredWorkVideos: ServiceVideos[] = [
   {
-    // 1 video available
-    id: "video",
-    slots: [
-      {
-        label: "AI UGC video sample 1",
-        video: "/videos/ai-ugc/pe09-3.mp4",
-        webm: "/videos/ai-ugc/pe09-3.webm",
-      },
-    ],
-  },
-  {
     // 5 videos available
     id: "strategy",
     slots: [
@@ -109,6 +98,17 @@ export const featuredWorkVideos: ServiceVideos[] = [
         label: "Faceless video sample 2",
         video: "/videos/faceless/t13.mp4",
         webm: "/videos/faceless/t13.webm",
+      },
+    ],
+  },
+  {
+    // 1 video available
+    id: "video",
+    slots: [
+      {
+        label: "AI UGC video sample 1",
+        video: "/videos/ai-ugc/pe09-3.mp4",
+        webm: "/videos/ai-ugc/pe09-3.webm",
       },
     ],
   },

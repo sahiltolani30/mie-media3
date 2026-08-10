@@ -5,13 +5,6 @@ import { featuredWorkVideos } from "@/config/videos";
 
 const servicesMeta = [
   {
-    id: "video",
-    title: "AI UGC",
-    tagline: "Authentic. Scalable.",
-    description: "Creator-style video ads generated at scale.",
-    folder: "AI UGC Videos",
-  },
-  {
     id: "strategy",
     title: "Talking Head",
     tagline: "Professional. Engaging.",
@@ -31,6 +24,13 @@ const servicesMeta = [
     tagline: "Scripted. Story-driven.",
     description: "Scripted, edited and motion-designed videos.",
     folder: "Faceless Videos",
+  },
+  {
+    id: "video",
+    title: "AI UGC",
+    tagline: "Authentic. Scalable.",
+    description: "Creator-style video ads generated at scale.",
+    folder: "AI UGC Videos",
   },
 ];
 
