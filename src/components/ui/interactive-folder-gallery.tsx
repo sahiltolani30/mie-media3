@@ -61,22 +61,18 @@ export function InteractiveFolderGallery({
     };
   }, [isFolderOpen, fullscreenPhoto]);
 
-  // Handle play/pause state for all card videos when folder opens/closes
+  // Handle play/pause state for all card videos
   useEffect(() => {
     videoRefs.current.forEach((el) => {
-      if (isFolderOpen) {
-        // Only auto-play if we are NOT in fullscreen, to avoid audio/video conflicts
-        if (!fullscreenPhoto) {
-           el.play().catch(() => {});
-        } else {
-           el.pause();
-        }
-      } else {
+      // Play videos constantly (even when folder is closed)
+      // Only pause them if a fullscreen video is currently playing to save CPU
+      if (fullscreenPhoto) {
         el.pause();
-        el.currentTime = 0;
+      } else {
+        el.play().catch(() => {});
       }
     });
-  }, [isFolderOpen, fullscreenPhoto]);
+  }, [fullscreenPhoto, isFolderOpen]);
 
   const setVideoRef = useCallback((id: string | number) => (el: HTMLVideoElement | null) => {
     if (el) {
@@ -160,6 +156,7 @@ export function InteractiveFolderGallery({
                       muted
                       loop
                       playsInline
+                      autoPlay
                       preload={loadedVideos ? "auto" : "none"}
                       className="w-full h-full object-cover pointer-events-none bg-zinc-900"
                     >
