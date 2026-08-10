@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 export interface GalleryPhoto {
@@ -36,11 +37,13 @@ export function InteractiveFolderGallery({
   const [hoverFolder, setHoverFolder] = useState(false);
   const [fullscreenPhoto, setFullscreenPhoto] = useState<GalleryPhoto | null>(null);
   const [loadedVideos, setLoadedVideos] = useState<boolean>(false);
+  const [mounted, setMounted] = useState(false);
 
   // Store refs to each card's video element so we can play/pause them
   const videoRefs = useRef<Map<string | number, HTMLVideoElement>>(new Map());
 
   useEffect(() => {
+    setMounted(true);
     // Wait just 100ms so the initial HTML parses (unblocking the Safari blue bar),
     // then trigger the TINY card videos to start downloading DURING the PreloaderScreen.
     // Total size is only ~5MB so this will not slow down the site.
@@ -212,55 +215,58 @@ export function InteractiveFolderGallery({
 
       </div>
 
-      {/* Fullscreen Overlay - Loads original HQ video dynamically */}
-      <AnimatePresence>
-        {fullscreenPhoto && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-sm"
-            onClick={() => setFullscreenPhoto(null)}
-          >
+      {/* Fullscreen Overlay - Rendered in a Portal to escape CSS transforms and overflow: hidden */}
+      {mounted && createPortal(
+        <AnimatePresence>
+          {fullscreenPhoto && (
             <motion.div
-              initial={{ scale: 0.92, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.92, y: 20 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full h-[100dvh] sm:h-auto sm:max-w-sm md:max-w-md lg:max-w-lg sm:aspect-[9/16] bg-black sm:rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl sm:border border-white/10 sm:mx-4"
-              onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-sm"
+              onClick={() => setFullscreenPhoto(null)}
             >
-              <button
-                className="absolute top-4 right-4 text-white/70 hover:text-white bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full p-3 transition-colors z-50"
-                onClick={() => setFullscreenPhoto(null)}
+              <motion.div
+                initial={{ scale: 0.92, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.92, y: 20 }}
+                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                className="relative w-full h-[100dvh] sm:h-auto sm:max-w-sm md:max-w-md lg:max-w-lg sm:aspect-[9/16] bg-black sm:rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl sm:border border-white/10 sm:mx-4"
+                onClick={(e) => e.stopPropagation()}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-              </button>
-
-              {fullscreenPhoto.video ? (
-                <video
-                  controls
-                  autoPlay
-                  playsInline
-                  poster={fullscreenPhoto.image}
-                  className="w-full h-full object-contain bg-black"
+                <button
+                  className="absolute top-4 right-4 text-white/70 hover:text-white bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full p-3 transition-colors z-50"
+                  onClick={() => setFullscreenPhoto(null)}
                 >
-                  {/* Load HQ WebM if available, otherwise HQ MP4 */}
-                  {fullscreenPhoto.webm && <source src={fullscreenPhoto.webm} type="video/webm" />}
-                  <source src={fullscreenPhoto.video} type="video/mp4" />
-                </video>
-              ) : fullscreenPhoto.image ? (
-                <img
-                  src={fullscreenPhoto.image}
-                  alt="Fullscreen view"
-                  className="w-full h-full object-cover"
-                />
-              ) : null}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+
+                {fullscreenPhoto.video ? (
+                  <video
+                    controls
+                    autoPlay
+                    playsInline
+                    poster={fullscreenPhoto.image}
+                    className="w-full h-full object-contain bg-black"
+                  >
+                    {/* Load HQ WebM if available, otherwise HQ MP4 */}
+                    {fullscreenPhoto.webm && <source src={fullscreenPhoto.webm} type="video/webm" />}
+                    <source src={fullscreenPhoto.video} type="video/mp4" />
+                  </video>
+                ) : fullscreenPhoto.image ? (
+                  <img
+                    src={fullscreenPhoto.image}
+                    alt="Fullscreen view"
+                    className="w-full h-full object-cover"
+                  />
+                ) : null}
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </div>
   );
 }
