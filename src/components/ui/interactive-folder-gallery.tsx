@@ -33,7 +33,15 @@ export function InteractiveFolderGallery({
   const [isFolderOpen, setIsFolderOpen] = useState(false);
   const [hoverFolder, setHoverFolder] = useState(false);
   const [fullscreenPhoto, setFullscreenPhoto] = useState<GalleryPhoto | null>(null);
-  const [loadedVideos, setLoadedVideos] = useState<Record<string, boolean>>({});
+  const [loadedVideos, setLoadedVideos] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Wait for the PreloaderScreen to finish (approx 3.2s) before triggering metadata load
+    const timer = setTimeout(() => {
+      setLoadedVideos(true);
+    }, 3200);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (isFolderOpen) {
@@ -122,24 +130,13 @@ export function InteractiveFolderGallery({
                             el.pause();
                             el.currentTime = 0;
                           }
-                          
-                          // Intersection Observer for lazy loading metadata
-                          if (!loadedVideos[photo.id]) {
-                            const observer = new IntersectionObserver((entries) => {
-                              if (entries[0].isIntersecting) {
-                                setLoadedVideos(prev => ({ ...prev, [photo.id]: true }));
-                                observer.disconnect();
-                              }
-                            }, { rootMargin: "500px" });
-                            observer.observe(el);
-                          }
                         }
                       }}
                       poster={photo.image}
                       muted
                       loop
                       playsInline
-                      preload={loadedVideos[photo.id] ? "metadata" : "none"}
+                      preload={loadedVideos ? "metadata" : "none"}
                       className="w-full h-full object-cover pointer-events-none bg-zinc-900"
                     >
                       {photo.webm && <source src={`${photo.webm}#t=0.001`} type="video/webm" />}

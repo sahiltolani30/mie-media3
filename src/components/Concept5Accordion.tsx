@@ -1,50 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { InteractiveFolderGallery } from "@/components/ui/interactive-folder-gallery";
 import { featuredWorkVideos } from "@/config/videos";
 import MobileSnapScroll from "@/components/mobile-ux/MobileSnapScroll";
-
-function VideoPreloader({ files }: { files: { video: string; webm?: string }[] }) {
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    const start = () => {
-      // Start downloading almost immediately so it buffers behind the loading screen
-      const timer = setTimeout(() => setReady(true), 100);
-      return timer;
-    };
-
-    let timer: ReturnType<typeof setTimeout>;
-    if (document.readyState === "complete") {
-      timer = start();
-    } else {
-      const onLoad = () => { timer = start(); };
-      window.addEventListener("load", onLoad, { once: true });
-      return () => window.removeEventListener("load", onLoad);
-    }
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (!ready) return null;
-
-  return (
-    <div aria-hidden="true" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", opacity: 0, pointerEvents: "none", left: -9999 }}>
-      {files.map((file) => (
-        <video
-          key={file.video}
-          muted
-          playsInline
-          preload="auto"
-        >
-          {file.webm && <source src={`${file.webm}#t=0.001`} type="video/webm" />}
-          <source src={`${file.video}#t=0.001`} type="video/mp4" />
-        </video>
-      ))}
-    </div>
-  );
-}
 
 
 // -------------------------------------------------------------------------
@@ -99,13 +59,6 @@ export default function Concept5Accordion() {
 
   return (
     <section className="w-full bg-[#0a0a0a] text-white overflow-hidden py-24 relative">
-        {/* Preload all videos silently to ensure instant playback */}
-        <VideoPreloader 
-          files={services.flatMap(s => s.photos.filter(p => p.video).map(p => ({ 
-            video: p.video as string, 
-            webm: p.webm as string | undefined 
-          })))} 
-        />
 
       {/* Cinematic Dynamic Background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center z-0 select-none">
