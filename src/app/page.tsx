@@ -11,6 +11,7 @@ import Footer from "@/components/Footer";
 import SuccessV2C7BentoKPI from "@/components/SuccessV2C7BentoKPI";
 import ICPV2C1CheckboxMirror from "@/components/ICPV2C1CheckboxMirror";
 import PreloaderScreen from "@/components/PreloaderScreen";
+import CalendlyPrefetch from "@/components/CalendlyPrefetch";
 
 export default function Home() {
   return (
@@ -42,6 +43,9 @@ export default function Home() {
       <ICPV2C1CheckboxMirror />
 
       <Footer />
+      
+      {/* Silently caches Calendly iframe in the background after 3.5s */}
+      <CalendlyPrefetch />
     </main>
   );
 }
