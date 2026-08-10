@@ -7,10 +7,10 @@ export default function PreloaderScreen() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Hide the preloader after 3.2 seconds
+    // Hide the preloader after 1.8 seconds (faster, snappier)
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3200);
+    }, 1800);
     
     // Prevent scrolling while loading screen is active
     document.body.style.overflow = "hidden";
