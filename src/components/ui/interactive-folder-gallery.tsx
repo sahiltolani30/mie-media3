@@ -111,6 +111,7 @@ export function InteractiveFolderGallery({
                         }
                       }}
                       src={photo.video}
+                      poster={photo.image}
                       muted
                       loop
                       playsInline

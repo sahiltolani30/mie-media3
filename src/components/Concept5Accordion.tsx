@@ -12,8 +12,8 @@ function VideoPreloader({ urls }: { urls: string[] }) {
 
   useEffect(() => {
     const start = () => {
-      // Wait 1s after load so critical page resources finish first
-      const timer = setTimeout(() => setReady(true), 1000);
+      // Wait 2s after load so critical page resources finish first
+      const timer = setTimeout(() => setReady(true), 2000);
       return timer;
     };
 
