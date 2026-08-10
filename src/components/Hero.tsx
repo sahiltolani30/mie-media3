@@ -111,17 +111,17 @@ export default function Hero() {
 
             <motion.div
               variants={childVariants}
-              className="flex flex-wrap items-center gap-4"
+              className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-4"
             >
               <a
-                href="#book"
-                className="group relative inline-flex items-center justify-center gap-3 rounded-full bg-[#FF8500] px-8 py-4 text-base font-semibold text-black transition-all active:scale-[0.98] hover:bg-[#FE7D13] shadow-[0_0_40px_-10px_rgba(255,133,0,0.5)] hover:shadow-[0_0_60px_-10px_rgba(255,133,0,0.7)]"
+                href="/book"
+                className="w-full sm:w-auto group relative inline-flex items-center justify-center gap-3 rounded-full bg-[#FF8500] px-8 py-4 text-base font-semibold text-black transition-all active:scale-[0.98] hover:bg-[#FE7D13] shadow-[0_0_40px_-10px_rgba(255,133,0,0.5)] hover:shadow-[0_0_60px_-10px_rgba(255,133,0,0.7)]"
               >
                 <span>Get Started</span>
               </a>
               <a
                 href="#how-it-works"
-                className="inline-flex items-center justify-center rounded-full px-8 py-4 border border-white/15 text-base font-medium text-white/80 transition-colors hover:bg-white/5 hover:text-white"
+                className="w-full sm:w-auto inline-flex items-center justify-center rounded-full px-8 py-4 border border-white/15 text-base font-medium text-white/80 transition-colors hover:bg-white/5 hover:text-white"
               >
                 See how it works
               </a>

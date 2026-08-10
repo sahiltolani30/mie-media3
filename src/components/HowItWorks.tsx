@@ -61,9 +61,9 @@ export default function HowItWorks() {
             {steps.map((step, index) => {
               const isEven = index % 2 === 0;
               return (
-                <div key={index} className="flex flex-col md:flex-row items-center justify-between w-full">
+                <div key={index} className="flex flex-col md:flex-row items-center justify-between w-full relative">
                   
-                  {/* Left Side (Empty on mobile, content on desktop if even) */}
+                  {/* Desktop Left Side (Empty on mobile, content on desktop if odd) */}
                   <div className={`hidden md:block w-[45%] ${!isEven ? 'text-right pr-12' : 'opacity-0'}`}>
                     {!isEven && (
                       <motion.div
@@ -89,8 +89,8 @@ export default function HowItWorks() {
                     />
                   </div>
 
-                  {/* Right Side (Content on mobile, content on desktop if odd) */}
-                  <div className={`w-full pl-16 md:pl-0 md:w-[45%] ${isEven ? 'md:text-left md:pl-12' : 'md:opacity-0 hidden md:block'}`}>
+                  {/* Desktop Right Side (Empty on mobile, content on desktop if even) */}
+                  <div className={`hidden md:block w-[45%] ${isEven ? 'text-left pl-12' : 'opacity-0'}`}>
                     {isEven && (
                       <motion.div
                         initial={{ opacity: 0, x: 30 }}
@@ -102,19 +102,19 @@ export default function HowItWorks() {
                         <p className="text-white/50 leading-relaxed">{step.desc}</p>
                       </motion.div>
                     )}
-                    
-                    {/* Mobile Only Content (Overrides the hidden alternating logic on small screens) */}
-                    <div className="block md:hidden">
-                       <motion.div
-                        initial={{ opacity: 0, x: 30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
-                      >
-                        <h3 className="text-xl font-medium text-white mb-2">{step.title}</h3>
-                        <p className="text-sm text-white/50 leading-relaxed">{step.desc}</p>
-                      </motion.div>
-                    </div>
+                  </div>
+
+                  {/* Mobile Only Content (Visible on all steps on small screens, hidden on desktop) */}
+                  <div className="w-full pl-16 py-2 block md:hidden">
+                     <motion.div
+                      initial={{ opacity: 0, x: 30 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, margin: "-100px" }}
+                      transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+                    >
+                      <h3 className="text-xl font-medium text-white mb-2">{step.title}</h3>
+                      <p className="text-sm text-white/50 leading-relaxed">{step.desc}</p>
+                    </motion.div>
                   </div>
 
                 </div>

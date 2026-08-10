@@ -166,7 +166,7 @@ export default function Concept5Accordion() {
                   />
 
                   <motion.h2 
-                    className={`text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter transition-all duration-500 origin-left ${isActive ? 'text-white scale-105' : 'text-white/20 group-hover:text-white/50 group-hover:translate-x-4'}`}
+                    className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tighter transition-all duration-500 origin-left ${isActive ? 'text-white scale-[1.02] md:scale-105' : 'text-white/20 group-hover:text-white/50 group-hover:translate-x-2 md:group-hover:translate-x-4'}`}
                   >
                     {service.title}
                   </motion.h2>

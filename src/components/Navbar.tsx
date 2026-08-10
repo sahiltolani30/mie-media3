@@ -40,7 +40,7 @@ export default function Navbar() {
           </a>
 
           {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -53,7 +53,7 @@ export default function Navbar() {
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex">
+          <div className="hidden lg:flex">
             <a
               href="/book"
               className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2.5 text-sm font-medium text-black transition-all active:scale-[0.98] hover:bg-[#F2F2F2]"
@@ -82,7 +82,7 @@ export default function Navbar() {
           {/* Mobile Hamburger Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="relative flex h-10 w-10 items-center justify-center rounded-full bg-white/5 md:hidden"
+            className="relative flex h-10 w-10 items-center justify-center rounded-full bg-white/5 lg:hidden"
             aria-label="Toggle Menu"
           >
             <div className="flex w-4 flex-col gap-1.5">
@@ -111,7 +111,7 @@ export default function Navbar() {
             animate={{ opacity: 1, backdropFilter: "blur(24px)" }}
             exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
             transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
-            className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-black/80 md:hidden"
+            className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-black/80 lg:hidden"
           >
             <div className="flex flex-col items-center gap-8">
               {navLinks.map((link, i) => (
