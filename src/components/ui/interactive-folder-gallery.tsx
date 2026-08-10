@@ -107,6 +107,18 @@ export function InteractiveFolderGallery({
     }
   }, [fullscreenPhoto]);
 
+  // Handle play/pause state for all videos when folder opens/closes
+  useEffect(() => {
+    videoRefs.current.forEach((el) => {
+      if (isFolderOpen) {
+        el.play().catch(() => {});
+      } else {
+        el.pause();
+        el.currentTime = 0;
+      }
+    });
+  }, [isFolderOpen]);
+
   const setVideoRef = useCallback((id: string | number) => (el: HTMLVideoElement | null) => {
     if (el) {
       videoRefs.current.set(id, el);
@@ -181,12 +193,6 @@ export function InteractiveFolderGallery({
                   {photo.video ? (
                     <video
                       ref={setVideoRef(photo.id)}
-                      onCanPlay={(e) => {
-                        const el = e.currentTarget;
-                        if (isFolderOpen) {
-                          el.play().catch(() => {});
-                        }
-                      }}
                       poster={photo.image}
                       muted
                       loop
