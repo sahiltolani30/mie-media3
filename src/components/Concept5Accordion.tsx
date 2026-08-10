@@ -6,15 +6,13 @@ import { InteractiveFolderGallery } from "@/components/ui/interactive-folder-gal
 import { featuredWorkVideos } from "@/config/videos";
 import MobileSnapScroll from "@/components/mobile-ux/MobileSnapScroll";
 
-// Silently preloads all videos after page is fully loaded and idle
 function VideoPreloader({ files }: { files: { video: string; webm?: string }[] }) {
   const [ready, setReady] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const start = () => {
-      // Wait 2s after load so critical page resources finish first
-      const timer = setTimeout(() => setReady(true), 2000);
+      // Start downloading almost immediately so it buffers behind the loading screen
+      const timer = setTimeout(() => setReady(true), 100);
       return timer;
     };
 
@@ -33,23 +31,12 @@ function VideoPreloader({ files }: { files: { video: string; webm?: string }[] }
 
   return (
     <div aria-hidden="true" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", opacity: 0, pointerEvents: "none", left: -9999 }}>
-      {files.slice(0, currentIndex + 1).map((file, index) => (
+      {files.map((file) => (
         <video
           key={file.video}
           muted
           playsInline
           preload="auto"
-          onLoadedData={() => {
-            if (index === currentIndex && currentIndex < files.length - 1) {
-              setCurrentIndex(i => i + 1);
-            }
-          }}
-          onError={() => {
-             // If a video fails to load, skip to the next one to prevent stalling
-            if (index === currentIndex && currentIndex < files.length - 1) {
-              setCurrentIndex(i => i + 1);
-            }
-          }}
         >
           {file.webm && <source src={`${file.webm}#t=0.001`} type="video/webm" />}
           <source src={`${file.video}#t=0.001`} type="video/mp4" />

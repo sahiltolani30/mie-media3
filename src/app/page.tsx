@@ -59,10 +59,12 @@ import ICPV2C7Accordion from "@/components/ICPV2C7Accordion";
 import ICPV2C8Provocation from "@/components/ICPV2C8Provocation";
 import ICPV2C9TypographyStagger from "@/components/ICPV2C9TypographyStagger";
 import ICPV2C10HorizontalPan from "@/components/ICPV2C10HorizontalPan";
+import PreloaderScreen from "@/components/PreloaderScreen";
 
 export default function Home() {
   return (
     <main className="flex flex-col min-h-screen relative overflow-clip">
+      <PreloaderScreen />
       <Navbar />
       <Hero />
       <Marquee />
