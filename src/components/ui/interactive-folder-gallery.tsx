@@ -33,6 +33,16 @@ export function InteractiveFolderGallery({
   const [isFolderOpen, setIsFolderOpen] = useState(false);
   const [hoverFolder, setHoverFolder] = useState(false);
   const [fullscreenPhoto, setFullscreenPhoto] = useState<GalleryPhoto | null>(null);
+  const [loadedVideos, setLoadedVideos] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Wait just 100ms so the initial HTML parses (unblocking the Safari blue bar), 
+    // then trigger the videos to start downloading DURING the PreloaderScreen
+    const timer = setTimeout(() => {
+      setLoadedVideos(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (isFolderOpen) {
@@ -126,7 +136,7 @@ export function InteractiveFolderGallery({
                       muted
                       loop
                       playsInline
-                      preload="none"
+                      preload={loadedVideos ? "auto" : "none"}
                       className="w-full h-full object-cover pointer-events-none bg-zinc-900"
                     >
                       {photo.webm && <source src={photo.webm} type="video/webm" />}
