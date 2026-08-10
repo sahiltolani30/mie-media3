@@ -220,6 +220,8 @@ export function InteractiveFolderGallery({
                   autoPlay
                   controls
                   playsInline
+                  preload="auto"
+                  poster={fullscreenPhoto.image}
                   className="w-full h-full object-cover"
                 >
                   {fullscreenPhoto.webm && <source src={`${fullscreenPhoto.webm}#t=0.001`} type="video/webm" />}
