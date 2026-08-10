@@ -110,7 +110,7 @@ export function InteractiveFolderGallery({
                           }
                         }
                       }}
-                      src={photo.video}
+                      src={`${photo.video}#t=0.001`}
                       poster={photo.image}
                       muted
                       loop
@@ -193,7 +193,7 @@ export function InteractiveFolderGallery({
 
               {fullscreenPhoto.video ? (
                 <video
-                  src={fullscreenPhoto.video}
+                  src={`${fullscreenPhoto.video}#t=0.001`}
                   autoPlay
                   controls
                   playsInline
