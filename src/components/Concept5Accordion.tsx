@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { InteractiveFolderGallery } from "@/components/ui/interactive-folder-gallery";
 import { featuredWorkVideos } from "@/config/videos";
+import MobileSnapScroll from "@/components/mobile-ux/MobileSnapScroll";
 
 // Silently preloads all videos after page is fully loaded and idle
 function VideoPreloader({ urls }: { urls: string[] }) {
@@ -139,102 +140,99 @@ export default function Concept5Accordion() {
         </p>
       </div>
 
-      <div className="container mx-auto px-4 lg:px-8 max-w-7xl flex flex-col lg:flex-row gap-12 lg:gap-24 min-h-[800px] relative z-10">
+      <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
         
-        {/* Left: Accordion Titles */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-center">
-          {services.map((service, index) => {
-            const isActive = activeId === service.id;
-            
-            return (
-              <div 
-                key={service.id} 
-                className="group cursor-pointer py-6 border-b border-white/10 last:border-0"
-                onMouseEnter={() => setActiveId(service.id)}
-                onClick={() => setActiveId(service.id)}
-              >
-                <div className="flex items-center gap-6 mb-2 relative">
-                  <span className={`text-sm font-mono tracking-widest transition-colors duration-500 ${isActive ? 'text-[#FF8500]' : 'text-white/20'}`}>
-                    0{index + 1}
-                  </span>
-                  
-                  {/* Animated Line Indicator */}
-                  <motion.div 
-                    initial={false}
-                    animate={{ width: isActive ? 40 : 0, opacity: isActive ? 1 : 0 }}
-                    className="h-px bg-[#FF8500] hidden md:block"
-                  />
-
-                  <motion.h2 
-                    className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tighter transition-all duration-500 origin-left ${isActive ? 'text-white scale-[1.02] md:scale-105' : 'text-white/20 group-hover:text-white/50 group-hover:translate-x-2 md:group-hover:translate-x-4'}`}
-                  >
-                    {service.title}
-                  </motion.h2>
-                </div>
-                
-                {/* Expandable Content */}
-                <AnimatePresence initial={false}>
-                  {isActive && (
-                    <motion.div 
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                      className="overflow-hidden"
-                    >
-                      <div className="pt-6 pb-4 pl-8 md:pl-12">
-                        <h3 className="text-xl md:text-2xl font-light text-[#FF8500] mb-4 italic">
-                          "{service.tagline}"
-                        </h3>
-                        <p className="text-lg text-white/60 leading-relaxed max-w-md mb-8 lg:mb-0">
-                          {service.description}
-                        </p>
-
-                        {/* Mobile Inline Visual (Hidden on Desktop) */}
-                        <div className="block lg:hidden w-full max-w-sm mx-auto mt-8">
-                          <div className="scale-[0.8] sm:scale-90 origin-top h-[400px] flex items-center justify-center">
-                            <InteractiveFolderGallery 
-                              folderName={service.folder}
-                              photos={service.photos}
-                              dragHintText="Swipe down to close"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            );
-          })}
+        {/* MOBILE & TABLET LAYOUT: Horizontal Snap Scroll (hidden on Desktop) */}
+        <div className="block lg:hidden -mx-4 sm:mx-0">
+          <MobileSnapScroll />
         </div>
 
-        {/* Right: Dynamic Visuals (Hidden on Mobile) */}
-        <div className="hidden lg:flex w-full lg:w-1/2 items-center justify-center relative min-h-[500px]">
-          <AnimatePresence mode="wait">
-            {services.map((service) => (
-              activeId === service.id && (
-                <motion.div 
-                  key={service.id}
-                  initial={{ opacity: 0, scale: 0.9, x: 20 }}
-                  animate={{ opacity: 1, scale: 1, x: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, x: -20 }}
-                  transition={{ duration: 0.4, ease: "easeInOut" }}
-                  className="absolute inset-0 flex items-center justify-center pointer-events-auto"
+        {/* DESKTOP LAYOUT: Split Screen Accordion (hidden on Mobile) */}
+        <div className="hidden lg:flex flex-row gap-24 min-h-[800px]">
+          
+          {/* Left: Accordion Titles */}
+          <div className="w-1/2 flex flex-col justify-center">
+            {services.map((service, index) => {
+              const isActive = activeId === service.id;
+              
+              return (
+                <div 
+                  key={service.id} 
+                  className="group cursor-pointer py-6 border-b border-white/10 last:border-0"
+                  onMouseEnter={() => setActiveId(service.id)}
+                  onClick={() => setActiveId(service.id)}
                 >
-                  <div className="scale-[0.7] sm:scale-90 lg:scale-100 relative z-10 w-[400px] h-[500px] flex items-center justify-center">
-                    <InteractiveFolderGallery 
-                      folderName={service.folder}
-                      photos={service.photos}
-                      dragHintText="Drag any video down to close"
+                  <div className="flex items-center gap-6 mb-2 relative">
+                    <span className={`text-sm font-mono tracking-widest transition-colors duration-500 ${isActive ? 'text-[#FF8500]' : 'text-white/20'}`}>
+                      0{index + 1}
+                    </span>
+                    
+                    {/* Animated Line Indicator */}
+                    <motion.div 
+                      initial={false}
+                      animate={{ width: isActive ? 40 : 0, opacity: isActive ? 1 : 0 }}
+                      className="h-px bg-[#FF8500] hidden md:block"
                     />
-                  </div>
-                </motion.div>
-              )
-            ))}
-          </AnimatePresence>
-        </div>
 
+                    <motion.h2 
+                      className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tighter transition-all duration-500 origin-left ${isActive ? 'text-white scale-[1.02] md:scale-105' : 'text-white/20 group-hover:text-white/50 group-hover:translate-x-2 md:group-hover:translate-x-4'}`}
+                    >
+                      {service.title}
+                    </motion.h2>
+                  </div>
+                  
+                  {/* Expandable Content */}
+                  <AnimatePresence initial={false}>
+                    {isActive && (
+                      <motion.div 
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pt-6 pb-4 pl-12">
+                          <h3 className="text-2xl font-light text-[#FF8500] mb-4 italic">
+                            "{service.tagline}"
+                          </h3>
+                          <p className="text-lg text-white/60 leading-relaxed max-w-md">
+                            {service.description}
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Right: Dynamic Visuals */}
+          <div className="w-1/2 flex items-center justify-center relative min-h-[500px]">
+            <AnimatePresence mode="wait">
+              {services.map((service) => (
+                activeId === service.id && (
+                  <motion.div 
+                    key={service.id}
+                    initial={{ opacity: 0, scale: 0.9, x: 20 }}
+                    animate={{ opacity: 1, scale: 1, x: 0 }}
+                    exit={{ opacity: 0, scale: 0.9, x: -20 }}
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                    className="absolute inset-0 flex items-center justify-center pointer-events-auto"
+                  >
+                    <div className="scale-100 relative z-10 w-[400px] h-[500px] flex items-center justify-center">
+                      <InteractiveFolderGallery 
+                        folderName={service.folder}
+                        photos={service.photos}
+                        dragHintText="Drag any video down to close"
+                      />
+                    </div>
+                  </motion.div>
+                )
+              ))}
+            </AnimatePresence>
+          </div>
+        </div>
       </div>
     </section>
   );
