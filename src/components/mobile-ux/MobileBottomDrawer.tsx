@@ -43,6 +43,7 @@ const services = servicesMeta.map((meta) => {
     id: i + 1,
     image: slot.image,
     video: slot.video ?? undefined,
+    webm: slot.webm ?? undefined,
   }));
   return { ...meta, photos };
 });

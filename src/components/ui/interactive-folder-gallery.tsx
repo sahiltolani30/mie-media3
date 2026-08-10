@@ -6,6 +6,7 @@ export interface GalleryPhoto {
   id: string | number;
   image?: string;
   video?: string | null;
+  webm?: string | null;
 }
 
 const defaultPhotos: GalleryPhoto[] = [
@@ -110,14 +111,16 @@ export function InteractiveFolderGallery({
                           }
                         }
                       }}
-                      src={`${photo.video}#t=0.001`}
                       poster={photo.image}
                       muted
                       loop
                       playsInline
                       preload="metadata"
                       className="w-full h-full object-cover pointer-events-none bg-zinc-900"
-                    />
+                    >
+                      {photo.webm && <source src={`${photo.webm}#t=0.001`} type="video/webm" />}
+                      <source src={`${photo.video}#t=0.001`} type="video/mp4" />
+                    </video>
                   ) : photo.image ? (
                     <img
                       src={photo.image}
@@ -193,12 +196,14 @@ export function InteractiveFolderGallery({
 
               {fullscreenPhoto.video ? (
                 <video
-                  src={`${fullscreenPhoto.video}#t=0.001`}
                   autoPlay
                   controls
                   playsInline
                   className="w-full h-full object-cover"
-                />
+                >
+                  {fullscreenPhoto.webm && <source src={`${fullscreenPhoto.webm}#t=0.001`} type="video/webm" />}
+                  <source src={`${fullscreenPhoto.video}#t=0.001`} type="video/mp4" />
+                </video>
               ) : fullscreenPhoto.image ? (
                 <img
                   src={fullscreenPhoto.image}

@@ -7,7 +7,7 @@ import { featuredWorkVideos } from "@/config/videos";
 import MobileSnapScroll from "@/components/mobile-ux/MobileSnapScroll";
 
 // Silently preloads all videos after page is fully loaded and idle
-function VideoPreloader({ urls }: { urls: string[] }) {
+function VideoPreloader({ files }: { files: { video: string; webm?: string }[] }) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -32,14 +32,16 @@ function VideoPreloader({ urls }: { urls: string[] }) {
 
   return (
     <div aria-hidden="true" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", opacity: 0, pointerEvents: "none", left: -9999 }}>
-      {urls.map((url) => (
+      {files.map((file) => (
         <video
-          key={url}
-          src={url}
+          key={file.video}
           muted
           playsInline
           preload="auto"
-        />
+        >
+          {file.webm && <source src={file.webm} type="video/webm" />}
+          <source src={file.video} type="video/mp4" />
+        </video>
       ))}
     </div>
   );
@@ -88,6 +90,7 @@ const services = servicesMeta.map((meta) => {
     id: i + 1,
     image: slot.image,
     video: slot.video ?? undefined,
+    webm: slot.webm ?? undefined,
   }));
   return { ...meta, photos };
 });
@@ -95,20 +98,15 @@ const services = servicesMeta.map((meta) => {
 export default function Concept5Accordion() {
   const [activeId, setActiveId] = useState<string>("video");
 
-  // Collect every video URL once for the background preloader
-  const allVideoUrls = Array.from(
-    new Set(
-      featuredWorkVideos.flatMap((s) =>
-        s.slots.map((slot) => slot.video).filter((v): v is string => !!v)
-      )
-    )
-  );
-
   return (
     <section className="w-full bg-[#0a0a0a] text-white overflow-hidden py-24 relative">
-      {/* Preload all videos silently after page load */}
-      <VideoPreloader urls={allVideoUrls} />
-
+        {/* Preload all videos silently to ensure instant playback */}
+        <VideoPreloader 
+          files={services.flatMap(s => s.photos.filter(p => p.video).map(p => ({ 
+            video: p.video as string, 
+            webm: p.webm as string | undefined 
+          })))} 
+        />
 
       {/* Cinematic Dynamic Background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center z-0 select-none">

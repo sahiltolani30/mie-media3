@@ -23,6 +23,8 @@ export type VideoSlot = {
   image?: string;
   /** Path to .mp4 in /public. Use null to show image only. */
   video: string | null;
+  /** Path to optimized .webm in /public (smaller file size) */
+  webm?: string | null;
 };
 
 export type ServiceVideos = {
@@ -48,28 +50,28 @@ export const featuredWorkVideos: ServiceVideos[] = [
     slots: [
       {
         label: "Talking head video sample 1",
-
         video: "/videos/talking-head/trial001.mp4",
+        webm: "/videos/talking-head/trial001.webm",
       },
       {
         label: "Talking head video sample 2",
-
         video: "/videos/talking-head/s1.mp4",
+        webm: "/videos/talking-head/s1.webm",
       },
       {
         label: "Talking head video sample 3",
-
         video: "/videos/talking-head/t13-2.mp4",
+        webm: "/videos/talking-head/t13-2.webm",
       },
       {
         label: "Talking head video sample 4",
-
         video: "/videos/talking-head/t15.mp4",
+        webm: "/videos/talking-head/t15.webm",
       },
       {
         label: "Talking head video sample 5",
-
         video: "/videos/talking-head/t18-2.mp4",
+        webm: "/videos/talking-head/t18-2.webm",
       },
     ],
   },
@@ -100,13 +102,13 @@ export const featuredWorkVideos: ServiceVideos[] = [
     slots: [
       {
         label: "Faceless video sample 1",
-
         video: "/videos/faceless/motiongraphics.mp4",
+        webm: "/videos/faceless/motiongraphics.webm",
       },
       {
         label: "Faceless video sample 2",
-
         video: "/videos/faceless/t13.mp4",
+        webm: "/videos/faceless/t13.webm",
       },
     ],
   },
