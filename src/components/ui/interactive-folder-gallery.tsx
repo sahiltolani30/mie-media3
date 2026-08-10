@@ -33,16 +33,6 @@ export function InteractiveFolderGallery({
   const [isFolderOpen, setIsFolderOpen] = useState(false);
   const [hoverFolder, setHoverFolder] = useState(false);
   const [fullscreenPhoto, setFullscreenPhoto] = useState<GalleryPhoto | null>(null);
-  const [loadedVideos, setLoadedVideos] = useState<boolean>(false);
-
-  useEffect(() => {
-    // Wait just 100ms so the initial HTML parses (unblocking the Safari blue bar), 
-    // then immediately inject videos so they buffer DURING the 1.8s PreloaderScreen
-    const timer = setTimeout(() => {
-      setLoadedVideos(true);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     if (isFolderOpen) {
@@ -120,11 +110,10 @@ export function InteractiveFolderGallery({
                   whileDrag={isFolderOpen ? { scale: openScale + 0.1, rotate: 5, zIndex: 150 } : {}}
                   transition={{ type: "spring", stiffness: 350, damping: 30 }}
                 >
-                  {photo.video && loadedVideos ? (
+                  {photo.video ? (
                     <video
                       ref={(el) => {
                         if (el) {
-                          // Handle play/pause state
                           if (isFolderOpen) {
                             el.play().catch(() => {});
                           } else {
@@ -137,11 +126,11 @@ export function InteractiveFolderGallery({
                       muted
                       loop
                       playsInline
-                      preload="metadata"
+                      preload="none"
                       className="w-full h-full object-cover pointer-events-none bg-zinc-900"
                     >
-                      {photo.webm && <source src={`${photo.webm}#t=0.001`} type="video/webm" />}
-                      <source src={`${photo.video}#t=0.001`} type="video/mp4" />
+                      {photo.webm && <source src={photo.webm} type="video/webm" />}
+                      <source src={photo.video} type="video/mp4" />
                     </video>
                   ) : photo.image ? (
                     <img
@@ -227,8 +216,8 @@ export function InteractiveFolderGallery({
                   poster={fullscreenPhoto.image}
                   className="w-full h-full object-cover"
                 >
-                  {fullscreenPhoto.webm && <source src={`${fullscreenPhoto.webm}#t=0.001`} type="video/webm" />}
-                  <source src={`${fullscreenPhoto.video}#t=0.001`} type="video/mp4" />
+                  {fullscreenPhoto.webm && <source src={fullscreenPhoto.webm} type="video/webm" />}
+                  <source src={fullscreenPhoto.video} type="video/mp4" />
                 </video>
               ) : fullscreenPhoto.image ? (
                 <img

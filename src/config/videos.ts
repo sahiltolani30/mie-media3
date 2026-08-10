@@ -39,26 +39,31 @@ export const featuredWorkVideos: ServiceVideos[] = [
     slots: [
       {
         label: "Talking head video sample 1",
+        image: "/videos/posters/trial001.jpg",
         video: "/videos/talking-head/trial001.mp4",
         webm: "/videos/talking-head/trial001.webm",
       },
       {
         label: "Talking head video sample 2",
+        image: "/videos/posters/s1.jpg",
         video: "/videos/talking-head/s1.mp4",
         webm: "/videos/talking-head/s1.webm",
       },
       {
         label: "Talking head video sample 3",
+        image: "/videos/posters/t13-2.jpg",
         video: "/videos/talking-head/t13-2.mp4",
         webm: "/videos/talking-head/t13-2.webm",
       },
       {
         label: "Talking head video sample 4",
+        image: "/videos/posters/t15.jpg",
         video: "/videos/talking-head/t15.mp4",
         webm: "/videos/talking-head/t15.webm",
       },
       {
         label: "Talking head video sample 5",
+        image: "/videos/posters/t18-2.jpg",
         video: "/videos/talking-head/t18-2.mp4",
         webm: "/videos/talking-head/t18-2.webm",
       },
@@ -70,16 +75,19 @@ export const featuredWorkVideos: ServiceVideos[] = [
     slots: [
       {
         label: "Short form clip sample 1",
+        image: "/videos/posters/t03.jpg",
         video: "/videos/clipping/t03.mp4",
         webm: "/videos/clipping/t03.webm",
       },
       {
         label: "Short form clip sample 2",
+        image: "/videos/posters/m1.jpg",
         video: "/videos/clipping/m1.mp4",
         webm: "/videos/clipping/m1.webm",
       },
       {
         label: "Short form clip sample 3",
+        image: "/videos/posters/craziest-customer.jpg",
         video: "/videos/clipping/craziest-customer.mp4",
         webm: "/videos/clipping/craziest-customer.webm",
       },
@@ -91,11 +99,13 @@ export const featuredWorkVideos: ServiceVideos[] = [
     slots: [
       {
         label: "Faceless video sample 1",
+        image: "/videos/posters/motiongraphics.jpg",
         video: "/videos/faceless/motiongraphics.mp4",
         webm: "/videos/faceless/motiongraphics.webm",
       },
       {
         label: "Faceless video sample 2",
+        image: "/videos/posters/t13.jpg",
         video: "/videos/faceless/t13.mp4",
         webm: "/videos/faceless/t13.webm",
       },
@@ -107,6 +117,7 @@ export const featuredWorkVideos: ServiceVideos[] = [
     slots: [
       {
         label: "AI UGC video sample 1",
+        image: "/videos/posters/pe09-3.jpg",
         video: "/videos/ai-ugc/pe09-3.mp4",
         webm: "/videos/ai-ugc/pe09-3.webm",
       },
