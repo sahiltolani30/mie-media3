@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export interface GalleryPhoto {
@@ -35,8 +35,15 @@ export function InteractiveFolderGallery({
   const [fullscreenPhoto, setFullscreenPhoto] = useState<GalleryPhoto | null>(null);
   const [loadedVideos, setLoadedVideos] = useState<boolean>(false);
 
+  // Store refs to each card's video element so we can reuse them in fullscreen
+  const videoRefs = useRef<Map<string | number, HTMLVideoElement>>(new Map());
+  // Container ref where we will move the video DOM node for fullscreen
+  const fullscreenContainerRef = useRef<HTMLDivElement>(null);
+  // Track original parent of video so we can return it when closing
+  const originalParentRef = useRef<{ el: HTMLVideoElement; parent: Element; nextSibling: Node | null } | null>(null);
+
   useEffect(() => {
-    // Wait just 100ms so the initial HTML parses (unblocking the Safari blue bar), 
+    // Wait just 100ms so the initial HTML parses (unblocking the Safari blue bar),
     // then trigger the videos to start downloading DURING the PreloaderScreen
     const timer = setTimeout(() => {
       setLoadedVideos(true);
@@ -55,13 +62,64 @@ export function InteractiveFolderGallery({
     };
   }, [isFolderOpen]);
 
+  // When fullscreen opens, physically move the already-playing video element into the overlay
+  useEffect(() => {
+    if (fullscreenPhoto && fullscreenPhoto.video) {
+      const videoEl = videoRefs.current.get(fullscreenPhoto.id);
+      const container = fullscreenContainerRef.current;
+      if (!videoEl || !container) return;
+
+      // Save original position so we can put it back
+      originalParentRef.current = {
+        el: videoEl,
+        parent: videoEl.parentElement!,
+        nextSibling: videoEl.nextSibling,
+      };
+
+      // Style the video for fullscreen
+      videoEl.classList.remove("pointer-events-none");
+      videoEl.controls = true;
+      videoEl.style.width = "100%";
+      videoEl.style.height = "100%";
+      videoEl.style.objectFit = "cover";
+      videoEl.style.borderRadius = "0";
+
+      container.appendChild(videoEl);
+    } else {
+      // Move the video element back to its card
+      const saved = originalParentRef.current;
+      if (saved) {
+        const { el, parent, nextSibling } = saved;
+        el.controls = false;
+        el.classList.add("pointer-events-none");
+        el.style.width = "";
+        el.style.height = "";
+        el.style.objectFit = "";
+        el.style.borderRadius = "";
+
+        if (nextSibling) {
+          parent.insertBefore(el, nextSibling);
+        } else {
+          parent.appendChild(el);
+        }
+        originalParentRef.current = null;
+      }
+    }
+  }, [fullscreenPhoto]);
+
+  const setVideoRef = useCallback((id: string | number) => (el: HTMLVideoElement | null) => {
+    if (el) {
+      videoRefs.current.set(id, el);
+    }
+  }, []);
+
   return (
     <div className={`w-full py-32 relative ${className || ""}`}>
       <div className="relative w-full min-h-[500px] flex flex-col items-center justify-center">
 
         <div className="relative w-[400px] h-[500px] flex justify-center pointer-events-none z-0">
 
-          <motion.div 
+          <motion.div
             className="absolute bottom-6 w-80 h-56 drop-shadow-2xl"
             animate={{ opacity: isFolderOpen ? 0 : 1, scale: isFolderOpen ? 0.9 : 1 }}
           >
@@ -122,14 +180,11 @@ export function InteractiveFolderGallery({
                 >
                   {photo.video ? (
                     <video
-                      ref={(el) => {
-                        if (el) {
-                          if (isFolderOpen) {
-                            el.play().catch(() => {});
-                          } else {
-                            el.pause();
-                            el.currentTime = 0;
-                          }
+                      ref={setVideoRef(photo.id)}
+                      onCanPlay={(e) => {
+                        const el = e.currentTarget;
+                        if (isFolderOpen) {
+                          el.play().catch(() => {});
                         }
                       }}
                       poster={photo.image}
@@ -157,14 +212,14 @@ export function InteractiveFolderGallery({
             })}
           </div>
 
-          <motion.div 
+          <motion.div
             className="absolute bottom-0 w-[340px] h-44 drop-shadow-[0_-20px_40px_rgba(0,0,0,0.8)] cursor-pointer z-20 pointer-events-auto"
             style={{ transformOrigin: "bottom" }}
-            animate={{ 
-              opacity: isFolderOpen ? 0 : 1, 
-              rotateX: hoverFolder ? -25 : 0, 
+            animate={{
+              opacity: isFolderOpen ? 0 : 1,
+              rotateX: hoverFolder ? -25 : 0,
               y: hoverFolder ? 10 : 0,
-              pointerEvents: isFolderOpen ? "none" : "auto" 
+              pointerEvents: isFolderOpen ? "none" : "auto"
             }}
             onMouseEnter={() => setHoverFolder(true)}
             onMouseLeave={() => setHoverFolder(false)}
@@ -182,7 +237,7 @@ export function InteractiveFolderGallery({
           </motion.div>
         </div>
 
-        <motion.div 
+        <motion.div
           animate={{ opacity: isFolderOpen ? 1 : 0, y: isFolderOpen ? 0 : 50 }}
           className="absolute bottom-10 px-6 py-3 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 backdrop-blur-md text-black/50 dark:text-white/50 text-sm font-medium tracking-wide pointer-events-none"
         >
@@ -198,44 +253,39 @@ export function InteractiveFolderGallery({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2 }}
             className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-sm"
             onClick={() => setFullscreenPhoto(null)}
           >
-            <motion.div 
-              initial={{ scale: 0.9, y: 20 }}
+            <motion.div
+              initial={{ scale: 0.92, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
+              exit={{ scale: 0.92, y: 20 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               className="relative w-full max-w-sm md:max-w-md lg:max-w-lg aspect-[9/16] bg-black rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 mx-4"
               onClick={(e) => e.stopPropagation()}
             >
-              <button 
+              <button
                 className="absolute top-4 right-4 text-white/70 hover:text-white bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full p-3 transition-colors z-50"
                 onClick={() => setFullscreenPhoto(null)}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
               </button>
 
-              {fullscreenPhoto.video ? (
-                <video
-                  autoPlay
-                  controls
-                  playsInline
-                  preload="auto"
-                  poster={fullscreenPhoto.image}
-                  className="w-full h-full object-cover"
-                >
-                  {fullscreenPhoto.webm && <source src={fullscreenPhoto.webm} type="video/webm" />}
-                  <source src={fullscreenPhoto.video} type="video/mp4" />
-                </video>
-              ) : fullscreenPhoto.image ? (
+              {/* The already-playing video will be moved into this div by the useEffect above */}
+              <div
+                ref={fullscreenContainerRef}
+                className="w-full h-full"
+              />
+
+              {/* Fallback for image-only items */}
+              {fullscreenPhoto && !fullscreenPhoto.video && fullscreenPhoto.image && (
                 <img
                   src={fullscreenPhoto.image}
                   alt="Fullscreen view"
                   className="w-full h-full object-cover"
                 />
-              ) : null}
+              )}
             </motion.div>
           </motion.div>
         )}
