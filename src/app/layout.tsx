@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import CalendlyPrefetcher from "@/components/CalendlyPrefetcher";
+import { CALENDLY_EMBED_URL } from "@/config/booking";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +31,18 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
       suppressHydrationWarning
     >
+      <head>
+        {/* Calendly performance: preconnect eliminates DNS+TCP+TLS cold-start latency */}
+        <link rel="preconnect" href="https://calendly.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://assets.calendly.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://api.calendly.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://calendly-uploads.s3.amazonaws.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://calendly.com" />
+        <link rel="dns-prefetch" href="https://assets.calendly.com" />
+        <link rel="dns-prefetch" href="https://api.calendly.com" />
+        {/* Prefetch the Calendly page itself so the browser warms the resource */}
+        <link rel="prefetch" href={CALENDLY_EMBED_URL} as="document" />
+      </head>
       <body className="min-h-[100dvh] flex flex-col bg-black text-[#F2F2F2] selection:bg-[#FF8500]/30 selection:text-white">
         <SmoothScroll>
           <CalendlyPrefetcher />

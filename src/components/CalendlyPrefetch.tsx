@@ -7,7 +7,6 @@ export default function CalendlyPrefetch() {
   const [shouldPrefetch, setShouldPrefetch] = useState(false);
 
   useEffect(() => {
-    // Wait for the main page to fully load and animations to finish (e.g. 3.5s)
     const timer = setTimeout(() => {
       // Execute during idle time if possible to avoid blocking the main thread
       if (typeof window !== "undefined" && "requestIdleCallback" in window) {
@@ -15,7 +14,7 @@ export default function CalendlyPrefetch() {
       } else {
         setShouldPrefetch(true);
       }
-    }, 3500);
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, []);

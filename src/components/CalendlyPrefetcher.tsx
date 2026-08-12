@@ -44,7 +44,13 @@ export default function CalendlyPrefetcher() {
     // Re-attach after 1s to catch dynamically rendered elements (mobile menu, etc.)
     const timer = setTimeout(attachToBookLinks, 1000);
 
-    return () => clearTimeout(timer);
+    // Auto-inject after 2s regardless of hover (covers direct /book navigation)
+    const autoTimer = setTimeout(injectHiddenFrame, 2000);
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(autoTimer);
+    };
   }, []);
 
   // Renders nothing - pure behaviour
