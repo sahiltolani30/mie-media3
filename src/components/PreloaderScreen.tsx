@@ -37,9 +37,9 @@ export default function PreloaderScreen() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-              className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-[0.25em] text-white uppercase text-center"
+              className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-white text-center"
             >
-              Miu Media
+              Miu<span className="text-gradient-primary">Media</span>
             </motion.h1>
 
             {/* The line draws beneath it */}
