@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,9 +36,9 @@ export default function Navbar() {
         {/* The Fluid Island */}
         <div className="glass-card flex items-center justify-between px-6 py-3 w-[90%] max-w-5xl rounded-full">
           {/* Logo */}
-          <a href="/" className="text-xl font-bold tracking-tighter text-white">
+          <Link href="/" className="text-xl font-bold tracking-tighter text-white">
             Miu<span className="text-gradient-primary">Media</span>
-          </a>
+          </Link>
 
           {/* Desktop Links */}
           <div className="hidden lg:flex items-center gap-8">
