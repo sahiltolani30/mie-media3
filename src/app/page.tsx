@@ -12,8 +12,11 @@ import SuccessV2C7BentoKPI from "@/components/SuccessV2C7BentoKPI";
 import ICPV2C1CheckboxMirror from "@/components/ICPV2C1CheckboxMirror";
 import PreloaderScreen from "@/components/PreloaderScreen";
 import CalendlyPrefetch from "@/components/CalendlyPrefetch";
+import { getServiceVideos } from "@/lib/queries";
 
-export default function Home() {
+export default async function Home() {
+  const featuredWorkVideos = await getServiceVideos();
+
   return (
     <main className="flex flex-col min-h-screen relative overflow-clip">
       <PreloaderScreen />
@@ -28,7 +31,7 @@ export default function Home() {
       <Services />
 
       {/* 3 NEW CONCEPTS FOR REVIEW */}
-      <Concept5Accordion />
+      <Concept5Accordion featuredWorkVideos={featuredWorkVideos} />
 
 
       <Approach />

@@ -1,8 +1,11 @@
 import MobileStickyStack from "@/components/mobile-ux/MobileStickyStack";
 import MobileSnapScroll from "@/components/mobile-ux/MobileSnapScroll";
 import MobileBottomDrawer from "@/components/mobile-ux/MobileBottomDrawer";
+import { getServiceVideos } from "@/lib/queries";
 
-export default function MobileUxTestPage() {
+export default async function MobileUxTestPage() {
+  const featuredWorkVideos = await getServiceVideos();
+
   return (
     <div className="min-h-screen bg-black text-white font-sans selection:bg-[#FF8500] selection:text-white pb-32">
       
@@ -20,7 +23,7 @@ export default function MobileUxTestPage() {
           <h2 className="text-xl font-bold text-[#FF8500]">Prototype 1: Sticky Stack</h2>
           <p className="text-sm text-white/50">Scroll down to see the cards stick and stack.</p>
         </div>
-        <MobileStickyStack />
+        <MobileStickyStack featuredWorkVideos={featuredWorkVideos} />
       </div>
 
       {/* Prototype 2 */}
@@ -29,7 +32,7 @@ export default function MobileUxTestPage() {
           <h2 className="text-xl font-bold text-[#FF8500]">Prototype 2: Snap Scroll</h2>
           <p className="text-sm text-white/50">Swipe horizontally to browse services natively.</p>
         </div>
-        <MobileSnapScroll />
+        <MobileSnapScroll featuredWorkVideos={featuredWorkVideos} />
       </div>
 
       {/* Prototype 3 */}
@@ -38,7 +41,7 @@ export default function MobileUxTestPage() {
           <h2 className="text-xl font-bold text-[#FF8500]">Prototype 3: Bottom Drawer</h2>
           <p className="text-sm text-white/50">Tap a title to slide the drawer up. Drag it down to close.</p>
         </div>
-        <MobileBottomDrawer />
+        <MobileBottomDrawer featuredWorkVideos={featuredWorkVideos} />
       </div>
 
     </div>

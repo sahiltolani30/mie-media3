@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { InteractiveFolderGallery } from "@/components/ui/interactive-folder-gallery";
-import { featuredWorkVideos } from "@/config/videos";
+import type { ServiceVideos } from "@/config/videos";
 import { X } from "lucide-react";
 
 const servicesMeta = [
@@ -37,20 +37,20 @@ const servicesMeta = [
   },
 ];
 
-const services = servicesMeta.map((meta) => {
-  const videoConfig = featuredWorkVideos.find((v) => v.id === meta.id);
-  const photos = (videoConfig?.slots ?? []).map((slot, i) => ({
-    id: i + 1,
-    image: slot.image,
-    video: slot.video ?? undefined,
-    webm: slot.webm ?? undefined,
-    cardVideo: slot.cardVideo ?? undefined,
-    cardWebm: slot.cardWebm ?? undefined,
-  }));
-  return { ...meta, photos };
-});
+export default function MobileBottomDrawer({ featuredWorkVideos }: { featuredWorkVideos: ServiceVideos[] }) {
+  const services = servicesMeta.map((meta) => {
+    const videoConfig = featuredWorkVideos.find((v) => v.id === meta.id);
+    const photos = (videoConfig?.slots ?? []).map((slot, i) => ({
+      id: i + 1,
+      image: slot.image,
+      video: slot.video ?? undefined,
+      webm: slot.webm ?? undefined,
+      cardVideo: slot.cardVideo ?? undefined,
+      cardWebm: slot.cardWebm ?? undefined,
+    }));
+    return { ...meta, photos };
+  });
 
-export default function MobileBottomDrawer() {
   const [activeId, setActiveId] = useState<string | null>(null);
   
   const activeService = services.find(s => s.id === activeId);

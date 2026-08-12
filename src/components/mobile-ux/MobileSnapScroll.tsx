@@ -1,7 +1,7 @@
 "use client";
 
 import { InteractiveFolderGallery } from "@/components/ui/interactive-folder-gallery";
-import { featuredWorkVideos } from "@/config/videos";
+import type { ServiceVideos } from "@/config/videos";
 
 const servicesMeta = [
   {
@@ -34,20 +34,20 @@ const servicesMeta = [
   },
 ];
 
-const services = servicesMeta.map((meta) => {
-  const videoConfig = featuredWorkVideos.find((v) => v.id === meta.id);
-  const photos = (videoConfig?.slots ?? []).map((slot, i) => ({
-    id: i + 1,
-    image: slot.image,
-    video: slot.video ?? undefined,
-    webm: slot.webm ?? undefined,
-    cardVideo: slot.cardVideo ?? undefined,
-    cardWebm: slot.cardWebm ?? undefined,
-  }));
-  return { ...meta, photos };
-});
+export default function MobileSnapScroll({ featuredWorkVideos }: { featuredWorkVideos: ServiceVideos[] }) {
+  const services = servicesMeta.map((meta) => {
+    const videoConfig = featuredWorkVideos.find((v) => v.id === meta.id);
+    const photos = (videoConfig?.slots ?? []).map((slot, i) => ({
+      id: i + 1,
+      image: slot.image,
+      video: slot.video ?? undefined,
+      webm: slot.webm ?? undefined,
+      cardVideo: slot.cardVideo ?? undefined,
+      cardWebm: slot.cardWebm ?? undefined,
+    }));
+    return { ...meta, photos };
+  });
 
-export default function MobileSnapScroll() {
   return (
     <div className="w-full py-12 bg-black">
       <div className="w-full flex overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-8 px-4 gap-4">

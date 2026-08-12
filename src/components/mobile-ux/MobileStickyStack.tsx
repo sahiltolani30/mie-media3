@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { InteractiveFolderGallery } from "@/components/ui/interactive-folder-gallery";
-import { featuredWorkVideos } from "@/config/videos";
+import type { ServiceVideos } from "@/config/videos";
 
 const servicesMeta = [
   {
@@ -36,18 +36,44 @@ const servicesMeta = [
   },
 ];
 
-const services = servicesMeta.map((meta) => {
-  const videoConfig = featuredWorkVideos.find((v) => v.id === meta.id);
-  const photos = (videoConfig?.slots ?? []).map((slot, i) => ({
-    id: i + 1,
-    image: slot.image,
-    video: slot.video ?? undefined,
-    webm: slot.webm ?? undefined,
-    cardVideo: slot.cardVideo ?? undefined,
-    cardWebm: slot.cardWebm ?? undefined,
-  }));
-  return { ...meta, photos };
-});
+export default function MobileStickyStack({ featuredWorkVideos }: { featuredWorkVideos: ServiceVideos[] }) {
+  const services = servicesMeta.map((meta) => {
+    const videoConfig = featuredWorkVideos.find((v) => v.id === meta.id);
+    const photos = (videoConfig?.slots ?? []).map((slot, i) => ({
+      id: i + 1,
+      image: slot.image,
+      video: slot.video ?? undefined,
+      webm: slot.webm ?? undefined,
+      cardVideo: slot.cardVideo ?? undefined,
+      cardWebm: slot.cardWebm ?? undefined,
+    }));
+    return { ...meta, photos };
+  });
+
+  const container = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: container,
+    offset: ["start start", "end end"]
+  });
+
+  return (
+    <div ref={container} className="relative w-full pb-[10dvh]">
+      {services.map((service, i) => {
+        const targetScale = 1 - ((services.length - i) * 0.05);
+        return (
+          <Card 
+            key={service.id}
+            service={service}
+            index={i}
+            progress={scrollYProgress}
+            range={[i * 0.25, 1]}
+            targetScale={targetScale}
+          />
+        );
+      })}
+    </div>
+  );
+}
 
 function Card({ service, index, progress, range, targetScale }: any) {
   const scale = useTransform(progress, range, [1, targetScale]);
@@ -77,32 +103,6 @@ function Card({ service, index, progress, range, targetScale }: any) {
           <p className="text-sm text-white/60 leading-relaxed">{service.description}</p>
         </div>
       </motion.div>
-    </div>
-  );
-}
-
-export default function MobileStickyStack() {
-  const container = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ["start start", "end end"]
-  });
-
-  return (
-    <div ref={container} className="relative w-full pb-[10dvh]">
-      {services.map((service, i) => {
-        const targetScale = 1 - ((services.length - i) * 0.05);
-        return (
-          <Card 
-            key={service.id}
-            service={service}
-            index={i}
-            progress={scrollYProgress}
-            range={[i * 0.25, 1]}
-            targetScale={targetScale}
-          />
-        );
-      })}
     </div>
   );
 }

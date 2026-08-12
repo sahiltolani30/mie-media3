@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { InteractiveFolderGallery } from "@/components/ui/interactive-folder-gallery";
-import { featuredWorkVideos } from "@/config/videos";
 import MobileSnapScroll from "@/components/mobile-ux/MobileSnapScroll";
+import type { ServiceVideos } from "@/config/videos";
 
 
 // -------------------------------------------------------------------------
@@ -42,22 +42,21 @@ const servicesMeta = [
   },
 ];
 
-// Merge copy with video/image config
-const services = servicesMeta.map((meta) => {
-  const videoConfig = featuredWorkVideos.find((v) => v.id === meta.id);
-  const photos = (videoConfig?.slots ?? []).map((slot, i) => ({
-    id: i + 1,
-    image: slot.image,
-    video: slot.video ?? undefined,
-    webm: slot.webm ?? undefined,
-    cardVideo: slot.cardVideo ?? undefined,
-    cardWebm: slot.cardWebm ?? undefined,
-  }));
-  return { ...meta, photos };
-});
-
-export default function Concept5Accordion() {
+export default function Concept5Accordion({ featuredWorkVideos }: { featuredWorkVideos: ServiceVideos[] }) {
   const [activeId, setActiveId] = useState<string>("strategy");
+
+  const services = servicesMeta.map((meta) => {
+    const videoConfig = featuredWorkVideos.find((v) => v.id === meta.id);
+    const photos = (videoConfig?.slots ?? []).map((slot, i) => ({
+      id: i + 1,
+      image: slot.image,
+      video: slot.video ?? undefined,
+      webm: slot.webm ?? undefined,
+      cardVideo: slot.cardVideo ?? undefined,
+      cardWebm: slot.cardWebm ?? undefined,
+    }));
+    return { ...meta, photos };
+  });
 
   return (
     <section className="w-full bg-[#0a0a0a] text-white overflow-hidden py-24 relative">
@@ -96,7 +95,7 @@ export default function Concept5Accordion() {
         
         {/* MOBILE & TABLET LAYOUT: Horizontal Snap Scroll (hidden on Desktop) */}
         <div className="block lg:hidden -mx-4 sm:mx-0">
-          <MobileSnapScroll />
+          <MobileSnapScroll featuredWorkVideos={featuredWorkVideos} />
         </div>
 
         {/* DESKTOP LAYOUT: Split Screen Accordion (hidden on Mobile) */}
