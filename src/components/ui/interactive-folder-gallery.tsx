@@ -43,6 +43,8 @@ export function InteractiveFolderGallery({
   const videoRefs = useRef<Map<string | number, HTMLVideoElement>>(new Map());
   // Ref to the fullscreen video element so we can exit native fullscreen on close
   const fullscreenVideoRef = useRef<HTMLVideoElement | null>(null);
+  // Track whether the pointer has moved enough to be a drag (not a tap/click)
+  const isDragging = useRef(false);
 
   useEffect(() => {
     setMounted(true);
@@ -159,7 +161,15 @@ export function InteractiveFolderGallery({
                   key={photo.id}
                   drag={isFolderOpen ? true : false}
                   dragSnapToOrigin={true}
-                  // Root Cause 3 Fix: Accept drag-down OR fast downward flick to close
+                  onDragStart={() => {
+                    isDragging.current = false;
+                  }}
+                  onDrag={(_e, info) => {
+                    // Mark as a real drag once pointer moves > 5px
+                    if (Math.abs(info.offset.x) > 5 || Math.abs(info.offset.y) > 5) {
+                      isDragging.current = true;
+                    }
+                  }}
                   onDragEnd={(_e, info) => {
                     const isDownDrag = info.offset.y > 80;
                     const isDownFlick = info.velocity.y > 400;
@@ -167,8 +177,12 @@ export function InteractiveFolderGallery({
                       setIsFolderOpen(false);
                       setHoverFolder(false);
                     }
+                    // Keep isDragging true briefly so the subsequent onClick is suppressed
+                    setTimeout(() => { isDragging.current = false; }, 50);
                   }}
                   onClick={() => {
+                    // Suppress click if this was a drag gesture
+                    if (isDragging.current) return;
                     if (isFolderOpen) {
                       setFullscreenPhoto(photo);
                     }
@@ -267,6 +281,7 @@ export function InteractiveFolderGallery({
               className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-sm"
               onClick={closeFullscreen}
             >
+              {/* Video card - overflow:hidden so video fills card cleanly */}
               <motion.div
                 initial={{ scale: 0.92, y: 20 }}
                 animate={{ scale: 1, y: 0 }}
@@ -275,21 +290,6 @@ export function InteractiveFolderGallery({
                 className="relative w-full h-[100dvh] sm:h-auto sm:max-w-sm md:max-w-md lg:max-w-lg sm:aspect-[9/16] bg-black sm:rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl sm:border border-white/10 sm:mx-4"
                 onClick={(e) => e.stopPropagation()}
               >
-                {/* Root Cause 2 Fix: Close button rendered ABOVE the video element
-                    with a higher z-index than native video controls (which are at z-index ~2147483647
-                    only inside the shadow DOM, our button sits outside so it always wins).
-                    Added pointer-events-auto explicitly so it is never blocked. */}
-                <button
-                  className="absolute top-4 right-4 text-white bg-black/70 hover:bg-black/90 backdrop-blur-md rounded-full p-3 transition-colors z-[100] pointer-events-auto"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    closeFullscreen();
-                  }}
-                  aria-label="Close video"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-                </button>
-
                 {fullscreenPhoto.video ? (
                   <video
                     ref={fullscreenVideoRef}
@@ -299,7 +299,6 @@ export function InteractiveFolderGallery({
                     poster={fullscreenPhoto.image}
                     className="w-full h-full object-contain bg-black"
                   >
-                    {/* Load HQ WebM if available, otherwise HQ MP4 */}
                     {fullscreenPhoto.webm && <source src={fullscreenPhoto.webm} type="video/webm" />}
                     <source src={fullscreenPhoto.video} type="video/mp4" />
                   </video>
@@ -311,6 +310,20 @@ export function InteractiveFolderGallery({
                   />
                 ) : null}
               </motion.div>
+
+              {/* Close button sits OUTSIDE the overflow:hidden video card so it is
+                  never clipped and always sits above native video controls.
+                  Fixed to top-right of the viewport overlay, not the card. */}
+              <button
+                className="fixed top-5 right-5 text-white bg-black/80 hover:bg-black rounded-full p-3 transition-colors z-[10000] pointer-events-auto shadow-lg border border-white/20"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  closeFullscreen();
+                }}
+                aria-label="Close video"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+              </button>
             </motion.div>
           )}
         </AnimatePresence>,
