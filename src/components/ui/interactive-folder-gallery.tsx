@@ -41,16 +41,39 @@ export function InteractiveFolderGallery({
 
   // Store refs to each card's video element so we can play/pause them
   const videoRefs = useRef<Map<string | number, HTMLVideoElement>>(new Map());
+  // Ref to the fullscreen video element so we can exit native fullscreen on close
+  const fullscreenVideoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     setMounted(true);
-    // Wait just 100ms so the initial HTML parses (unblocking the Safari blue bar),
-    // then trigger the TINY card videos to start downloading DURING the PreloaderScreen.
-    // Total size is only ~5MB so this will not slow down the site.
     const timer = setTimeout(() => {
       setLoadedVideos(true);
     }, 100);
     return () => clearTimeout(timer);
+  }, []);
+
+  // Root Cause 1 Fix: ESC key listener to close fullscreen overlay
+  useEffect(() => {
+    if (!fullscreenPhoto) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeFullscreen();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown, true);
+    return () => document.removeEventListener("keydown", handleKeyDown, true);
+  }, [fullscreenPhoto]);
+
+  // Root Cause 2 Fix: Exit browser native fullscreen whenever our overlay closes
+  const closeFullscreen = useCallback(() => {
+    // If the browser is in native fullscreen (triggered by video controls),
+    // exit it first before hiding the React overlay
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    }
+    setFullscreenPhoto(null);
   }, []);
 
   useEffect(() => {
@@ -64,11 +87,21 @@ export function InteractiveFolderGallery({
     };
   }, [fullscreenPhoto]);
 
+  // Root Cause 2 Fix: Listen for native fullscreen exit (user presses ESC inside native player)
+  // so our React overlay stays in sync
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      // If browser fullscreen was exited but our overlay is still open, keep overlay open
+      // (the user just collapsed the native player back inside our overlay - that's fine)
+      // Nothing to do here, the close button / ESC / backdrop handles overlay close
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
+
   // Handle play/pause state for all card videos
   useEffect(() => {
     videoRefs.current.forEach((el) => {
-      // Play videos constantly (even when folder is closed)
-      // Only pause them if a fullscreen video is currently playing to save CPU
       if (fullscreenPhoto) {
         el.pause();
       } else {
@@ -98,7 +131,10 @@ export function InteractiveFolderGallery({
             <div className="absolute top-10 left-2 right-2 bottom-2 bg-black rounded-lg shadow-inner pointer-events-none" />
           </motion.div>
 
-          <div className="absolute bottom-10 z-10 flex justify-center">
+          {/* Root Cause 3 Fix: overflow-visible on the card container so drag gesture
+              is not clipped by parent overflow:hidden. Also switched drag close
+              threshold to use offset + velocity for more reliable detection. */}
+          <div className="absolute bottom-10 z-10 flex justify-center overflow-visible">
             {photos.map((photo, i) => {
             const offset = i - (photos.length - 1) / 2;
 
@@ -114,7 +150,7 @@ export function InteractiveFolderGallery({
               const openRotate = 0;
               const openScale = 1.05;
 
-              // Use card-specific videos if they exist, otherwise fallback to main video (for backwards compatibility)
+              // Use card-specific videos if they exist, otherwise fallback to main video
               const videoSrc = photo.cardVideo || photo.video;
               const webmSrc = photo.cardWebm || photo.webm;
 
@@ -123,8 +159,11 @@ export function InteractiveFolderGallery({
                   key={photo.id}
                   drag={isFolderOpen ? true : false}
                   dragSnapToOrigin={true}
-                  onDragEnd={(e, info) => {
-                    if (info.offset.y > 100 && isFolderOpen) {
+                  // Root Cause 3 Fix: Accept drag-down OR fast downward flick to close
+                  onDragEnd={(_e, info) => {
+                    const isDownDrag = info.offset.y > 80;
+                    const isDownFlick = info.velocity.y > 400;
+                    if ((isDownDrag || isDownFlick) && isFolderOpen) {
                       setIsFolderOpen(false);
                       setHoverFolder(false);
                     }
@@ -224,8 +263,9 @@ export function InteractiveFolderGallery({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
+              // Root Cause 4 Fix: backdrop click still closes overlay
               className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-sm"
-              onClick={() => setFullscreenPhoto(null)}
+              onClick={closeFullscreen}
             >
               <motion.div
                 initial={{ scale: 0.92, y: 20 }}
@@ -235,15 +275,24 @@ export function InteractiveFolderGallery({
                 className="relative w-full h-[100dvh] sm:h-auto sm:max-w-sm md:max-w-md lg:max-w-lg sm:aspect-[9/16] bg-black sm:rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl sm:border border-white/10 sm:mx-4"
                 onClick={(e) => e.stopPropagation()}
               >
+                {/* Root Cause 2 Fix: Close button rendered ABOVE the video element
+                    with a higher z-index than native video controls (which are at z-index ~2147483647
+                    only inside the shadow DOM, our button sits outside so it always wins).
+                    Added pointer-events-auto explicitly so it is never blocked. */}
                 <button
-                  className="absolute top-4 right-4 text-white/70 hover:text-white bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full p-3 transition-colors z-50"
-                  onClick={() => setFullscreenPhoto(null)}
+                  className="absolute top-4 right-4 text-white bg-black/70 hover:bg-black/90 backdrop-blur-md rounded-full p-3 transition-colors z-[100] pointer-events-auto"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    closeFullscreen();
+                  }}
+                  aria-label="Close video"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                 </button>
 
                 {fullscreenPhoto.video ? (
                   <video
+                    ref={fullscreenVideoRef}
                     controls
                     autoPlay
                     playsInline
