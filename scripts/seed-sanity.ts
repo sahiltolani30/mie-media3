@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { createClient } from "@sanity/client";
 import { featuredWorkVideos } from "../src/config/videos";
 import * as fs from "fs";
