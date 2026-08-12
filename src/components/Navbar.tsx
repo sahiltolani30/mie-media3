@@ -36,7 +36,16 @@ export default function Navbar() {
         {/* The Fluid Island */}
         <div className="glass-card flex items-center justify-between px-6 py-3 w-[90%] max-w-5xl rounded-full">
           {/* Logo */}
-          <Link href="/" className="text-xl font-bold tracking-tighter text-white">
+          <Link 
+            href="/" 
+            className="text-xl font-bold tracking-tighter text-white"
+            onClick={(e) => {
+              if (window.location.pathname === '/') {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            }}
+          >
             Miu<span className="text-gradient-primary">Media</span>
           </Link>
 

@@ -7,9 +7,17 @@ export default function PreloaderScreen() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Check if preloader was already shown in this session
+    const hasSeenPreloader = sessionStorage.getItem("miu_media_preloader_shown");
+    if (hasSeenPreloader) {
+      setIsLoading(false);
+      return;
+    }
+
     // Hide the preloader after 1.8 seconds (faster, snappier)
     const timer = setTimeout(() => {
       setIsLoading(false);
+      sessionStorage.setItem("miu_media_preloader_shown", "true");
     }, 1800);
     
     // Prevent scrolling while loading screen is active
