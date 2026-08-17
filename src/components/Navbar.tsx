@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +38,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link 
             href="/" 
-            className="flex items-center gap-2.5 text-xl font-bold tracking-tighter text-white group"
+            className="text-xl font-bold tracking-tighter text-white"
             onClick={(e) => {
               if (window.location.pathname === '/') {
                 e.preventDefault();
@@ -47,17 +46,7 @@ export default function Navbar() {
               }
             }}
           >
-            <div className="relative w-7 h-7 rounded-lg overflow-hidden flex items-center justify-center bg-black/40 border border-white/10 group-hover:border-[#FF8500]/50 transition-colors">
-              <Image 
-                src="/miu-logo.png" 
-                alt="Miu Media" 
-                width={28} 
-                height={28} 
-                className="w-full h-full object-cover"
-                priority
-              />
-            </div>
-            <span>Miu<span className="text-gradient-primary">Media</span></span>
+            Miu<span className="text-gradient-primary">Media</span>
           </Link>
 
           {/* Desktop Links */}
