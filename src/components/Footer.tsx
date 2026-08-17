@@ -113,7 +113,9 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <h3 className="text-2xl font-black text-white mb-6 tracking-tighter">MIU MEDIA</h3>
+            <h3 className="text-2xl font-bold tracking-tighter text-white mb-6">
+              Miu<span className="text-gradient-primary">Media</span>
+            </h3>
             <p className="text-white/40 text-sm leading-relaxed max-w-xs mb-8">
               Creative Content Studio. AI UGC &mdash; Short Form Editing &mdash; Talking Head Videos &mdash; Faceless Content
             </p>
