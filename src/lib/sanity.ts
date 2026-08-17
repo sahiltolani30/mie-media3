@@ -1,15 +1,27 @@
 import { createClient } from "@sanity/client";
-import imageUrlBuilder from "@sanity/image-url";
+import { createImageUrlBuilder } from "@sanity/image-url";
 
-export const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
-  apiVersion: "2024-03-01",
-  useCdn: true,
-});
+export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 
-const builder = imageUrlBuilder(client);
+export const client = projectId
+  ? createClient({
+      projectId,
+      dataset,
+      apiVersion: "2024-03-01",
+      useCdn: true,
+    })
+  : null;
+
+const builder = client ? createImageUrlBuilder(client) : null;
 
 export function urlFor(source: any) {
+  if (!builder || !source) {
+    return {
+      width: () => ({ url: () => "" }),
+      url: () => "",
+    };
+  }
   return builder.image(source);
 }
+

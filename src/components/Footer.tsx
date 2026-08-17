@@ -153,7 +153,8 @@ export default function Footer() {
                 href="https://wa.me/8429598149"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/40 hover:bg-white/10 hover:text-white hover:border-white/20 transition-all"
+                aria-label="WhatsApp"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/40 hover:bg-[#FF8500]/10 hover:text-[#FF8500] hover:border-[#FF8500]/40 transition-all"
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >

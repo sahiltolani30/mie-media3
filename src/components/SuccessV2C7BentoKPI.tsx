@@ -58,7 +58,7 @@ export default function SuccessV2C7BentoKPI() {
 
   const videos = useCounter(100, active, 1500);
   const views = useCounter(2, active, 1000);
-  const industries = useCounter(10, active, 1200);
+  const experience = useCounter(5, active, 1000);
 
   return (
     <section id="results" ref={sectionRef} className="relative w-full bg-[#050505] border-b border-white/5 py-32 px-6">
@@ -104,7 +104,7 @@ export default function SuccessV2C7BentoKPI() {
             </div>
           </motion.div>
 
-          {/* System active */}
+          {/* Experience */}
           <motion.div
             className="md:col-span-3 border border-white/8 bg-white/[0.02] p-8 flex flex-col justify-between hover:border-[#FF8500]/20 transition-all duration-500"
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
@@ -116,15 +116,15 @@ export default function SuccessV2C7BentoKPI() {
                 animate={{ opacity: [1, 0.3, 1] }}
                 transition={{ repeat: Infinity, duration: 1.5 }}
               />
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[#FF8500]/60">Breadth of Experience</span>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[#FF8500]/60">Track Record</span>
             </div>
             <div>
-              <div className="text-4xl font-black text-white font-mono">{industries}+</div>
-              <p className="text-[12px] text-white/30 mt-1">Different industries served</p>
+              <div className="text-4xl font-black text-white font-mono">{experience}+</div>
+              <p className="text-[12px] text-white/30 mt-1">Years of experience</p>
             </div>
           </motion.div>
 
-          {/* Progress bar: conversion rate */}
+          {/* Progress bar: delivery time */}
           <motion.div
             className="md:col-span-4 border border-white/8 bg-white/[0.02] p-8 flex flex-col justify-between hover:border-[#FF8500]/20 transition-all duration-500"
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
@@ -133,14 +133,14 @@ export default function SuccessV2C7BentoKPI() {
             <p className="text-[10px] font-mono uppercase tracking-widest text-white/20">Avg. delivery time</p>
             <div>
               <div className="flex items-end justify-between mb-2">
-                <span className="text-4xl font-black text-white font-mono">48h</span>
+                <span className="text-4xl font-black text-white font-mono">6h</span>
                 <span className="text-[11px] text-white/20 font-mono">Industry: 2-3 weeks</span>
               </div>
               <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
                 <motion.div
                   className="h-full rounded-full bg-[#FF8500]"
                   initial={{ width: 0 }}
-                  whileInView={{ width: "85%" }}
+                  whileInView={{ width: "95%" }}
                   transition={{ delay: 0.5, duration: 1.5, ease: [0.32, 0.72, 0, 1] }}
                   viewport={{ once: true }}
                 />
@@ -148,7 +148,7 @@ export default function SuccessV2C7BentoKPI() {
             </div>
           </motion.div>
 
-          {/* Timeline note */}
+          {/* Client retention */}
           <motion.div
             className="md:col-span-3 border border-white/8 bg-white/[0.02] p-8 flex flex-col justify-center hover:border-[#FF8500]/20 transition-all duration-500"
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
