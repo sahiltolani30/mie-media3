@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const letterVariants = {
   hidden: { y: 60, opacity: 0 },
@@ -113,7 +114,18 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <h3 className="text-2xl font-black text-white mb-6 tracking-tighter">MIU MEDIA</h3>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="relative w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center bg-black/40 border border-white/10">
+                <Image 
+                  src="/miu-logo.png" 
+                  alt="Miu Media" 
+                  width={32} 
+                  height={32} 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h3 className="text-2xl font-black text-white tracking-tighter">MIU MEDIA</h3>
+            </div>
             <p className="text-white/40 text-sm leading-relaxed max-w-xs mb-8">
               Creative Content Studio. AI UGC &mdash; Short Form Editing &mdash; Talking Head Videos &mdash; Faceless Content
             </p>

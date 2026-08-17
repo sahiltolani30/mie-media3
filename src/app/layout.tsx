@@ -19,6 +19,19 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Miu Media | Content-Powered Client Acquisition",
   description: "Digital marketing and brand design agency specializing in helping architects and interior designers attract high-value clients.",
+  icons: {
+    icon: [
+      { url: "/miu-logo.png", type: "image/png" },
+      { url: "/favicon.ico" },
+    ],
+    apple: [{ url: "/miu-logo.png", type: "image/png" }],
+    shortcut: "/miu-logo.png",
+  },
+  openGraph: {
+    title: "Miu Media | Content-Powered Client Acquisition",
+    description: "Digital marketing and brand design agency specializing in helping architects and interior designers attract high-value clients.",
+    images: ["/miu-logo.png"],
+  },
 };
 
 export default function RootLayout({
