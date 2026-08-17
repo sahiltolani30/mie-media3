@@ -120,7 +120,9 @@ export default function Footer() {
             <div className="flex items-center gap-3">
               {/* Instagram Icon */}
               <motion.a
-                href="#"
+                href="https://www.instagram.com/miu.media/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/40 hover:bg-white/10 hover:text-white hover:border-white/20 transition-all"
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.95 }}
@@ -133,7 +135,9 @@ export default function Footer() {
               </motion.a>
               {/* LinkedIn Icon */}
               <motion.a
-                href="#"
+                href="https://www.linkedin.com/in/dipanshdesigns/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/40 hover:bg-white/10 hover:text-white hover:border-white/20 transition-all"
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.95 }}
@@ -144,15 +148,18 @@ export default function Footer() {
                   <circle cx="4" cy="4" r="2"></circle>
                 </svg>
               </motion.a>
-              {/* Twitter/X Icon */}
+              {/* WhatsApp Icon */}
               <motion.a
-                href="#"
+                href="https://wa.me/8429598149"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/40 hover:bg-white/10 hover:text-white hover:border-white/20 transition-all"
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5 5 9.2 2 4c3.1 3.1 8.2 4 11 4-.4-4.5 4.8-7.3 8-5 1.4-.5 3-1.5 3-1.5z"></path>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"></path>
+                  <path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"></path>
                 </svg>
               </motion.a>
             </div>

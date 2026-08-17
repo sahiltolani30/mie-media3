@@ -435,6 +435,17 @@ export default function PrivacyPolicyContent() {
               make.it.up12business@gmail.com
             </a>
           </p>
+          <p className="mt-2">
+            WhatsApp:{" "}
+            <a
+              href="https://wa.me/8429598149"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#FF8500] hover:text-[#FF9149] underline underline-offset-4 transition-colors"
+            >
+              +91 8429598149
+            </a>
+          </p>
           <p className="mt-3 text-white/40">
             We will respond to privacy-related requests within 30 days. For EU/EEA
             residents, if you are not satisfied with our response, you have the right

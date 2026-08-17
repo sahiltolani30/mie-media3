@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import CalendlyPrefetcher from "@/components/CalendlyPrefetcher";
+import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import { CALENDLY_EMBED_URL } from "@/config/booking";
 
 const geistSans = Geist({
@@ -48,6 +49,7 @@ export default function RootLayout({
           <CalendlyPrefetcher />
           {children}
         </SmoothScroll>
+        <FloatingWhatsApp />
       </body>
     </html>
   );

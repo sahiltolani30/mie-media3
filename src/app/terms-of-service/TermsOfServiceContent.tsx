@@ -643,6 +643,17 @@ export default function TermsOfServiceContent() {
               make.it.up12business@gmail.com
             </a>
           </p>
+          <p className="mt-2">
+            WhatsApp:{" "}
+            <a
+              href="https://wa.me/8429598149"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#FF8500] hover:text-[#FF9149] underline underline-offset-4 transition-colors"
+            >
+              +91 8429598149
+            </a>
+          </p>
           <p className="mt-3 text-white/40">
             We will respond to general inquiries within 7 business days and to formal
             requests within 30 days.
