@@ -145,12 +145,6 @@ export default function ConceptJ_FilterableGrid({ featuredWorkVideos }: { featur
                     </div>
                   </div>
 
-                  {/* Clean Title Below */}
-                  <div className="flex flex-col px-2 text-center">
-                    <h3 className="text-white/90 text-sm md:text-base font-medium leading-snug group-hover:text-[#FF8500] transition-colors line-clamp-2">
-                      {video.label}
-                    </h3>
-                  </div>
                 </motion.div>
               ))}
             </AnimatePresence>
