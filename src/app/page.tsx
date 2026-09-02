@@ -5,7 +5,7 @@ import Problem from "@/components/Problem";
 import ProblemV2BrokenFunnel from "@/components/ProblemV2BrokenFunnel";
 import Approach from "@/components/Approach";
 import Services from "@/components/Services";
-import Concept5Accordion from "@/components/Concept5Accordion";
+import ConceptJ_FilterableGrid from "@/components/featured-work/ConceptJ_FilterableGrid";
 import HowItWorks from "@/components/HowItWorks";
 import Footer from "@/components/Footer";
 import SuccessV2C7BentoKPI from "@/components/SuccessV2C7BentoKPI";
@@ -30,9 +30,7 @@ export default async function Home() {
       <ProblemV2BrokenFunnel />
       <Services />
 
-      {/* 3 NEW CONCEPTS FOR REVIEW */}
-      <Concept5Accordion featuredWorkVideos={featuredWorkVideos} />
-
+      <ConceptJ_FilterableGrid featuredWorkVideos={featuredWorkVideos} />
 
       <Approach />
       {/* 10 NEW "OUR APPROACH" V2 CONCEPTS FOR REVIEW */}
