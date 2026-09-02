@@ -24,13 +24,13 @@ export default async function Home() {
       <Hero />
       <Marquee />
 
+      <ConceptJ_FilterableGrid featuredWorkVideos={featuredWorkVideos} />
+
       <Problem />
 
       {/* 5 NEW PROBLEM CONCEPTS FOR REVIEW */}
       <ProblemV2BrokenFunnel />
       <Services />
-
-      <ConceptJ_FilterableGrid featuredWorkVideos={featuredWorkVideos} />
 
       <Approach />
       {/* 10 NEW "OUR APPROACH" V2 CONCEPTS FOR REVIEW */}
